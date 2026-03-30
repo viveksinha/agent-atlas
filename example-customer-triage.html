@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Service Triage Agent — AgentAtlas</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <span class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      AgentAtlas
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="examples.html" class="active">Examples</a></li>
+      <li><a href="deep-tech.html">Deep Tech</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> › <a href="examples.html">Examples</a> › Customer Service Triage Agent</div>
+    <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="badge" style="background:#e8f4fd; color:#1565c0; border:1px solid #90caf9;">Python</span>
+    </div>
+    <h1>Customer Service Triage Agent</h1>
+    <p>Reads incoming support tickets, classifies them by urgency and topic, routes to the right team, drafts a suggested response, and logs to a spreadsheet — reducing manual triage time by 80%.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- QUICK LINKS -->
+  <div style="background:white; border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; display:flex; gap:16px; flex-wrap:wrap; margin-bottom:40px; box-shadow:var(--shadow);">
+    <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted); align-self:center;">Jump to:</span>
+    <a href="#problem" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">The Problem</a>
+    <a href="#prereqs" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Prerequisites</a>
+    <a href="#setup" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Setup</a>
+    <a href="#routing" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Routing Rules</a>
+    <a href="#code" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">The Code</a>
+    <a href="#run" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Run It</a>
+    <a href="#extend" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Extend It</a>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="section" id="problem" style="scroll-margin-top:80px;">
+    <div class="section-title">The Problem This Solves</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;">
+      <div style="background:#fff0f0; border:1px solid #ffd0d0; border-radius:var(--radius); padding:20px;">
+        <h3 style="color:#c0392b; font-size:0.9rem; font-weight:700; text-transform:uppercase; margin-bottom:12px;">Without Agent</h3>
+        <ul style="list-style:none; font-size:0.9rem; line-height:2.2;">
+          <li>Support inbox fills up over the weekend</li>
+          <li>Agent reads each ticket to categorise</li>
+          <li>Urgent tickets buried among low-priority noise</li>
+          <li>Manually assigns to correct team member</li>
+          <li>Writes response from scratch</li>
+          <li style="font-weight:700; color:#c0392b; margin-top:4px;">2–3 min per ticket just for triage</li>
+        </ul>
+      </div>
+      <div style="background:#f0fff4; border:1px solid #b2f0c8; border-radius:var(--radius); padding:20px;">
+        <h3 style="color:#1a7a40; font-size:0.9rem; font-weight:700; text-transform:uppercase; margin-bottom:12px;">With Agent</h3>
+        <ul style="list-style:none; font-size:0.9rem; line-height:2.2;">
+          <li>All tickets classified automatically</li>
+          <li>P1/P2 tickets flagged to Slack in seconds</li>
+          <li>Routed to the right team instantly</li>
+          <li>Draft response ready for agent to review</li>
+          <li>Full triage log in spreadsheet</li>
+          <li style="font-weight:700; color:#1a7a40; margin-top:4px;">15 sec per ticket for triage</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREREQS -->
+  <section class="section" id="prereqs" style="scroll-margin-top:80px;">
+    <div class="section-title">Prerequisites</div>
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Python 3.9+ and pip</h3>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Anthropic API key</h3>
+          <p>Get one at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Gmail API access</h3>
+          <p>Follow the <a href="example-lead-qualifier.html#gmail">Gmail API setup steps</a> to get a <code>credentials.json</code> and run the auth flow once. This example reads from your support inbox.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Slack webhook URL</h3>
+          <p>Create a Slack app with an incoming webhook for a <code>#support-alerts</code> channel. See <a href="example-lead-qualifier.html#prereqs">Lead Qualifier prerequisites</a> for steps.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ROUTING RULES -->
+  <section class="section" id="routing" style="scroll-margin-top:80px;">
+    <div class="section-title">Define Your Routing Rules</div>
+    <div class="section-subtitle">Before writing code, define the rules for your business. Edit these in the code to match your team structure.</div>
+
+    <div style="background:white; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);">
+      <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
+        <thead>
+          <tr style="background:var(--gray-100);">
+            <th style="padding:12px 16px; text-align:left; font-weight:700; border-bottom:1px solid var(--border);">Category</th>
+            <th style="padding:12px 16px; text-align:left; font-weight:700; border-bottom:1px solid var(--border);">Keywords / Signals</th>
+            <th style="padding:12px 16px; text-align:left; font-weight:700; border-bottom:1px solid var(--border);">Routes To</th>
+            <th style="padding:12px 16px; text-align:left; font-weight:700; border-bottom:1px solid var(--border);">SLA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border); background:#fff3f3;">
+            <td style="padding:12px 16px; font-weight:600; color:#c0392b;">🚨 P1 — Critical</td>
+            <td style="padding:12px 16px;">Outage, data loss, security breach, can't access account</td>
+            <td style="padding:12px 16px;">Senior Support + Slack alert</td>
+            <td style="padding:12px 16px;">1 hour</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border); background:#fff8f0;">
+            <td style="padding:12px 16px; font-weight:600; color:#e67e22;">🔥 P2 — High</td>
+            <td style="padding:12px 16px;">Feature broken, billing error, data wrong</td>
+            <td style="padding:12px 16px;">Technical Support</td>
+            <td style="padding:12px 16px;">4 hours</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:12px 16px; font-weight:600;">📋 P3 — Medium</td>
+            <td style="padding:12px 16px;">How-to questions, feature requests, slow performance</td>
+            <td style="padding:12px 16px;">Support Team</td>
+            <td style="padding:12px 16px;">24 hours</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:12px 16px; font-weight:600; color:var(--text-muted);">💬 P4 — Low</td>
+            <td style="padding:12px 16px;">General feedback, thank-you notes, newsletter requests</td>
+            <td style="padding:12px 16px;">Customer Success</td>
+            <td style="padding:12px 16px;">72 hours</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px; font-weight:600;">💰 Billing</td>
+            <td style="padding:12px 16px;">Invoice, refund, payment, subscription, charge</td>
+            <td style="padding:12px 16px;">Finance Team</td>
+            <td style="padding:12px 16px;">24 hours</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SETUP -->
+  <section class="section" id="setup" style="scroll-margin-top:80px;">
+    <div class="section-title">Step 1 — Project Setup</div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>mkdir customer-triage && cd customer-triage
+python3 -m venv venv
+source venv/bin/activate
+pip install anthropic google-auth google-auth-oauthlib \
+    google-api-python-client gspread requests python-dotenv</code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">.env</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>ANTHROPIC_API_KEY=sk-ant-...
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+GOOGLE_SHEET_ID=your-triage-log-sheet-id
+# Gmail credentials from credentials.json + token.json</code></pre>
+    </div>
+  </section>
+
+  <!-- THE CODE -->
+  <section class="section" id="code" style="scroll-margin-top:80px;">
+    <div class="section-title">Step 2 — The Agent Code</div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">triage_agent.py — full customer service triage agent</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>import os
+import base64
+import json
+import time
+import requests
+from datetime import datetime
+from dotenv import load_dotenv
+import anthropic
+import gspread
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+
+load_dotenv()
+
+claude = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+
+# ── Routing configuration — edit to match your team ──────────────────────────
+
+ROUTING_CONFIG = {
+    "P1": {
+        "team":  "Senior Support",
+        "email": "senior-support@yourcompany.com",
+        "slack": True,
+        "sla":   "1 hour"
+    },
+    "P2": {
+        "team":  "Technical Support",
+        "email": "tech-support@yourcompany.com",
+        "slack": True,
+        "sla":   "4 hours"
+    },
+    "P3": {
+        "team":  "Support Team",
+        "email": "support@yourcompany.com",
+        "slack": False,
+        "sla":   "24 hours"
+    },
+    "P4": {
+        "team":  "Customer Success",
+        "email": "success@yourcompany.com",
+        "slack": False,
+        "sla":   "72 hours"
+    },
+    "Billing": {
+        "team":  "Finance Team",
+        "email": "billing@yourcompany.com",
+        "slack": False,
+        "sla":   "24 hours"
+    }
+}
+
+# ── Gmail helpers ─────────────────────────────────────────────────────────────
+
+def get_gmail_service():
+    creds = Credentials.from_authorized_user_file('token.json')
+    return build('gmail', 'v1', credentials=creds)
+
+def get_support_emails(service, support_label="INBOX", max_results=50):
+    results = service.users().messages().list(
+        userId='me', q='is:unread in:inbox', maxResults=max_results
+    ).execute()
+    return results.get('messages', [])
+
+def get_email_content(service, msg_id):
+    msg     = service.users().messages().get(userId='me', id=msg_id, format='full').execute()
+    headers = {h['name']: h['value'] for h in msg['payload']['headers']}
+    body    = ''
+    for part in msg['payload'].get('parts', [msg['payload']]):
+        if part.get('mimeType') == 'text/plain':
+            data = part['body'].get('data', '')
+            body = base64.urlsafe_b64decode(data).decode('utf-8', errors='ignore')
+            break
+    return {
+        'id':      msg_id,
+        'from':    headers.get('From', ''),
+        'subject': headers.get('Subject', ''),
+        'body':    body[:2000]
+    }
+
+def mark_processed(service, msg_id):
+    service.users().messages().modify(
+        userId='me', id=msg_id, body={'removeLabelIds': ['UNREAD']}
+    ).execute()
+
+# ── Triage with Claude ────────────────────────────────────────────────────────
+
+TRIAGE_PROMPT = """You are a customer service triage specialist. Analyse this 
+support ticket and classify it.
+
+PRIORITY LEVELS:
+- P1 (Critical): System outage, data loss, security breach, account lockout
+- P2 (High): Feature broken, billing error, data incorrect, API down
+- P3 (Medium): How-to questions, slow performance, minor bugs, feature requests
+- P4 (Low): General feedback, praise, newsletter requests, non-urgent enquiries
+- Billing: Any issue specifically about invoices, payments, refunds, subscriptions
+
+CUSTOMER SENTIMENT:
+- Angry: Threatening to cancel, using caps, exclamation marks, frustrated language
+- Frustrated: Repeated issue, second contact, disappointed tone
+- Neutral: Matter-of-fact tone
+- Positive: Satisfied customer with a question
+
+OUTPUT FORMAT — respond only with valid JSON:
+{
+  "priority": "<P1|P2|P3|P4|Billing>",
+  "category": "<one of: Account Access | Technical Bug | Billing | Performance | Feature Request | General Enquiry | Feedback | Security>",
+  "sentiment": "<Angry|Frustrated|Neutral|Positive>",
+  "issue_summary": "<one sentence describing the exact problem>",
+  "key_details": "<any account numbers, error messages, or specific details mentioned>",
+  "suggested_response": "<a professional, empathetic draft reply that: (1) acknowledges the issue, (2) confirms next steps, (3) gives a specific timeline based on the priority>",
+  "internal_notes": "<what the agent handling this should know before responding>"
+}"""
+
+def triage_ticket(email: dict) -> dict:
+    response = claude.messages.create(
+        model="claude-3-5-sonnet-20241022",
+        max_tokens=600,
+        messages=[{
+            "role": "user",
+            "content": f"{TRIAGE_PROMPT}\n\nFROM: {email['from']}\nSUBJECT: {email['subject']}\n\nBODY:\n{email['body']}"
+        }]
+    )
+    try:
+        return json.loads(response.content[0].text)
+    except json.JSONDecodeError:
+        return {
+            "priority": "P3",
+            "category": "General Enquiry",
+            "sentiment": "Neutral",
+            "issue_summary": "Could not auto-classify — manual review needed",
+            "suggested_response": "",
+            "internal_notes": "Auto-triage failed. Review manually."
+        }
+
+# ── Slack alerting ────────────────────────────────────────────────────────────
+
+def send_slack_alert(email: dict, triage: dict):
+    priority = triage['priority']
+    emoji    = {"P1": "🚨", "P2": "🔥"}.get(priority, "📋")
+    color    = {"P1": "#e74c3c", "P2": "#e67e22"}.get(priority, "#3498db")
+
+    payload = {
+        "attachments": [{
+            "color": color,
+            "blocks": [
+                {"type": "header", "text": {"type": "plain_text", "text": f"{emoji} {priority} Support Ticket — Immediate Attention"}},
+                {"type": "section", "fields": [
+                    {"type": "mrkdwn", "text": f"*From:*\n{email['from']}"},
+                    {"type": "mrkdwn", "text": f"*Priority:*\n{priority}"},
+                    {"type": "mrkdwn", "text": f"*Category:*\n{triage['category']}"},
+                    {"type": "mrkdwn", "text": f"*Sentiment:*\n{triage['sentiment']}"},
+                ]},
+                {"type": "section", "text": {"type": "mrkdwn", "text": f"*Issue:* {triage['issue_summary']}"}},
+                {"type": "section", "text": {"type": "mrkdwn", "text": f"*Subject:* {email['subject']}"}},
+            ]
+        }]
+    }
+    requests.post(os.getenv("SLACK_WEBHOOK_URL"), json=payload)
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+
+def log_to_sheet(email: dict, triage: dict, routing: dict):
+    creds  = Credentials.from_authorized_user_file('token.json')
+    client = gspread.authorize(creds)
+    sheet  = client.open_by_key(os.getenv("GOOGLE_SHEET_ID")).sheet1
+    sheet.append_row([
+        datetime.now().strftime("%Y-%m-%d %H:%M"),
+        email['from'],
+        email['subject'],
+        triage['priority'],
+        triage['category'],
+        triage['sentiment'],
+        triage['issue_summary'],
+        routing['team'],
+        triage.get('internal_notes', '')
+    ])
+
+# ── Main agent loop ───────────────────────────────────────────────────────────
+
+def run_agent():
+    print("Customer Service Triage Agent — Starting...")
+    gmail = get_gmail_service()
+
+    while True:
+        emails = get_support_emails(gmail)
+        print(f"\nFound {len(emails)} unread tickets")
+
+        for msg_ref in emails:
+            try:
+                email   = get_email_content(gmail, msg_ref['id'])
+                triage  = triage_ticket(email)
+                routing = ROUTING_CONFIG.get(triage['priority'], ROUTING_CONFIG['P3'])
+
+                print(f"  [{triage['priority']}] {email['subject'][:50]} "
+                      f"→ {routing['team']} ({triage['category']})")
+
+                # Alert Slack for P1 and P2
+                if routing.get('slack'):
+                    send_slack_alert(email, triage)
+
+                # Log everything
+                log_to_sheet(email, triage, routing)
+                mark_processed(gmail, email['id'])
+
+            except Exception as e:
+                print(f"  Error: {e}")
+
+        print("Sleeping 3 minutes...")
+        time.sleep(180)
+
+if __name__ == "__main__":
+    run_agent()</code></pre>
+    </div>
+  </section>
+
+  <!-- RUN IT -->
+  <section class="section" id="run" style="scroll-margin-top:80px;">
+    <div class="section-title">Step 3 — Create the Triage Log Sheet, Then Run</div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Create the triage log spreadsheet</h3>
+          <p>Create a new Google Sheet. Add headers in Row 1: <code>Timestamp | From | Subject | Priority | Category | Sentiment | Issue Summary | Assigned To | Internal Notes</code>. Copy the Sheet ID from the URL into your <code>.env</code>.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Send a few test emails to yourself</h3>
+          <p>Send 3–4 emails to the inbox you're monitoring with different scenarios: a critical outage report ("Our entire team cannot log in — we've been down for 2 hours!"), a billing question ("Can I get a refund for last month?"), and a feature request. Mark them unread.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Run the agent</h3>
+        </div>
+      </li>
+    </ol>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>source venv/bin/activate
+python triage_agent.py</code></pre>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon"></span>
+      <p><strong>Shared inbox tip:</strong> For a team support inbox (e.g. support@yourcompany.com) you can add it as a delegated account in Gmail settings and use the same OAuth approach with <code>userId='support@yourcompany.com'</code> instead of <code>'me'</code>.</p>
+    </div>
+  </section>
+
+  <!-- EXTEND -->
+  <section class="section" id="extend" style="scroll-margin-top:80px;">
+    <div class="section-title">Extend It</div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px;">
+      <div class="card">
+        <h3>Auto-send the draft response</h3>
+        <p>For P3 and P4 tickets, auto-send the <code>suggested_response</code> immediately. For P1 and P2, post it to Slack with an "Approve & Send" button so an agent can review before it goes out.</p>
+      </div>
+      <div class="card">
+        <h3>Zendesk / Freshdesk integration</h3>
+        <p>Instead of logging to Google Sheets, use the Zendesk or Freshdesk API to create a ticket, set the priority, assign it to the right team, and add the internal note — all from the same triage output.</p>
+      </div>
+      <div class="card">
+        <h3>Repeat customer detection</h3>
+        <p>Before triaging, check if the sender's email appears in your customer database. If they've contacted you 3+ times about the same issue, automatically escalate to P2 and flag it in the internal notes.</p>
+      </div>
+      <div class="card">
+        <h3>Trending issue detection</h3>
+        <p>Every hour, scan the triage log and group tickets by category. If any category gets 5+ tickets in an hour, fire a Slack alert: "Spike detected: 7 tickets about Login Issues in the last hour."</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>AgentAtlas &nbsp;·&nbsp; Navigate the world of AI agents &nbsp;·&nbsp; <a href="https://github.com/viveksinha/agent-atlas" target="_blank">GitHub</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

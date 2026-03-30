@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Outreach Agent — AgentAtlas</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <span class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      AgentAtlas
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="examples.html" class="active">Examples</a></li>
+      <li><a href="deep-tech.html">Deep Tech</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> › <a href="examples.html">Examples</a> › Sales Outreach Agent</div>
+    <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="badge" style="background:#e8f4fd; color:#1565c0; border:1px solid #90caf9;">Python</span>
+    </div>
+    <h1>Sales Outreach Agent</h1>
+    <p>Reads a lead list from Google Sheets, researches each prospect via web search, drafts personalised emails, routes senior contacts to Slack for approval, then sends and logs results — all automatically.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- QUICK LINKS -->
+  <div style="background:white; border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; display:flex; gap:16px; flex-wrap:wrap; margin-bottom:40px; box-shadow:var(--shadow);">
+    <span style="font-size:0.85rem; font-weight:700; color:var(--text-muted); align-self:center;">Jump to:</span>
+    <a href="#problem" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">The Problem</a>
+    <a href="#prereqs" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Prerequisites</a>
+    <a href="#sheet" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Google Sheet Setup</a>
+    <a href="#code" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">The Code</a>
+    <a href="#run" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Run It</a>
+    <a href="#extend" style="font-size:0.875rem; color:var(--black); font-weight:600; text-decoration:none;">Extend It</a>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="section" id="problem" style="scroll-margin-top:80px;">
+    <div class="section-title">The Problem This Solves</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;">
+      <div style="background:#fff0f0; border:1px solid #ffd0d0; border-radius:var(--radius); padding:20px;">
+        <h3 style="color:#c0392b; font-size:0.9rem; font-weight:700; text-transform:uppercase; margin-bottom:12px;">Without Agent</h3>
+        <ul style="list-style:none; font-size:0.9rem; line-height:2.2;">
+          <li>Sales rep researches each prospect manually (15 min each)</li>
+          <li>Copy-pastes a generic template</li>
+          <li>Tries to personalise by hand</li>
+          <li>Sends without a second review</li>
+          <li>Spreadsheet never gets updated</li>
+          <li style="font-weight:700; color:#c0392b; margin-top:4px;">3–4 hrs to send 20 outreach emails</li>
+        </ul>
+      </div>
+      <div style="background:#f0fff4; border:1px solid #b2f0c8; border-radius:var(--radius); padding:20px;">
+        <h3 style="color:#1a7a40; font-size:0.9rem; font-weight:700; text-transform:uppercase; margin-bottom:12px;">With Agent</h3>
+        <ul style="list-style:none; font-size:0.9rem; line-height:2.2;">
+          <li>Reads all prospects from Google Sheets</li>
+          <li>Researches each company via web search</li>
+          <li>Drafts a unique, personalised email</li>
+          <li>Routes VP/C-suite to Slack for human approval</li>
+          <li>Sends approved emails + updates sheet</li>
+          <li style="font-weight:700; color:#1a7a40; margin-top:4px;">20 min to send 20 personalised emails</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREREQS -->
+  <section class="section" id="prereqs" style="scroll-margin-top:80px;">
+    <div class="section-title">Prerequisites</div>
+    <ul class="steps">
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Python 3.9+ and pip</h3>
+          <p>Check: <code>python3 --version</code>.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Anthropic API key</h3>
+          <p>Get one at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>. We use Claude for drafting because its tone in sales copy is naturally persuasive without being pushy.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Tavily API key (for web research)</h3>
+          <p>Tavily is a search API built for AI agents. Sign up for free at <a href="https://tavily.com" target="_blank">tavily.com</a> — you get 1,000 free searches/month. This is what the agent uses to research each prospect's company before drafting the email.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Google Sheets API credentials</h3>
+          <p>Follow the same Google Cloud setup as in the <a href="example-lead-qualifier.html#gmail">Lead Qualifier example</a> — create a project, enable Google Sheets API, download <code>credentials.json</code>, run <code>auth.py</code> once to generate <code>token.json</code>.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Slack webhook URL</h3>
+          <p>Create a Slack app with an incoming webhook for a channel like <code>#sales-approvals</code>. See the <a href="example-lead-qualifier.html#prereqs">Lead Qualifier prerequisites</a> for exact steps.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">✓</div>
+        <div class="step-content">
+          <h3>Gmail/SMTP credentials for sending</h3>
+          <p>Use Gmail App Password or any SMTP provider. See the <a href="example-claims-fnol.html#prereqs">FNOL Agent prerequisites</a> for Gmail App Password setup.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- GOOGLE SHEET SETUP -->
+  <section class="section" id="sheet" style="scroll-margin-top:80px;">
+    <div class="section-title">Step 1 — Set Up the Google Sheet</div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Create the lead list spreadsheet</h3>
+          <p>Go to <a href="https://sheets.google.com" target="_blank">sheets.google.com</a> → New blank sheet → name it "Sales Outreach Pipeline".</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Add these headers in Row 1 (columns A through J)</h3>
+          <p><code>Name | Title | Company | Email | Company Website | Status | Email Draft | Sent At | Response | Notes</code></p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Add your prospects (Rows 2 onward)</h3>
+          <p>Fill in at minimum: Name, Title, Company, Email, and Company Website. Leave Status blank — the agent will fill it in. Example row:</p>
+          <p><code>Sarah Chen | VP of Sales | Acme Corp | s.chen@acme.com | acme.com | | | | |</code></p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Note the Sheet ID</h3>
+          <p>From the URL: <code>https://docs.google.com/spreadsheets/d/<strong>[THIS PART]</strong>/edit</code>. Add it to your <code>.env</code> file.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- SETUP -->
+  <section class="section" id="setup" style="scroll-margin-top:80px;">
+    <div class="section-title">Step 2 — Project Setup</div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>mkdir sales-outreach && cd sales-outreach
+python3 -m venv venv
+source venv/bin/activate
+pip install anthropic tavily-python gspread google-auth \
+    google-auth-oauthlib requests python-dotenv</code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">.env</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>ANTHROPIC_API_KEY=sk-ant-...
+TAVILY_API_KEY=tvly-...
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+GOOGLE_SHEET_ID=your-sheet-id
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=outreach@yourcompany.com
+SMTP_PASSWORD=your-app-password
+SENDER_NAME=Alex Johnson        # Your name — appears in sent emails
+SENIOR_TITLES=VP,Director,C-suite,CEO,CTO,CFO,COO,Chief,President</code></pre>
+    </div>
+  </section>
+
+  <!-- THE CODE -->
+  <section class="section" id="code" style="scroll-margin-top:80px;">
+    <div class="section-title">Step 3 — The Agent Code</div>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">agent.py — full sales outreach agent</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>import os
+import smtplib
+import time
+import requests
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime
+from dotenv import load_dotenv
+import anthropic
+import gspread
+from google.oauth2.credentials import Credentials
+from tavily import TavilyClient
+
+load_dotenv()
+
+claude  = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+tavily  = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+
+SENIOR_TITLES = [t.strip() for t in os.getenv("SENIOR_TITLES", "VP,Director").split(",")]
+SENDER_NAME   = os.getenv("SENDER_NAME", "Your Name")
+
+# ── Google Sheets ─────────────────────────────────────────────────────────────
+
+def get_sheet():
+    creds  = Credentials.from_authorized_user_file('token.json')
+    client = gspread.authorize(creds)
+    return client.open_by_key(os.getenv("GOOGLE_SHEET_ID")).sheet1
+
+def get_pending_leads(sheet):
+    """Return rows where Status is empty (not yet processed)."""
+    rows = sheet.get_all_records()
+    pending = []
+    for i, row in enumerate(rows, start=2):  # start=2 because row 1 is headers
+        if not row.get('Status'):
+            pending.append({'row_index': i, **row})
+    return pending
+
+def update_row(sheet, row_index: int, updates: dict):
+    """Update specific columns in a row."""
+    headers = sheet.row_values(1)
+    for col_name, value in updates.items():
+        if col_name in headers:
+            col_index = headers.index(col_name) + 1
+            sheet.update_cell(row_index, col_index, str(value))
+
+# ── Web research ──────────────────────────────────────────────────────────────
+
+def research_company(company: str, website: str) -> str:
+    """Use Tavily to research a company before drafting the email."""
+    query = f"{company} {website} recent news product company"
+    try:
+        results = tavily.search(
+            query=query,
+            search_depth="basic",
+            max_results=3,
+            include_answer=True
+        )
+        summary = results.get('answer', '')
+        snippets = [r.get('content', '')[:300] for r in results.get('results', [])[:2]]
+        return f"{summary}\n\n" + "\n\n".join(snippets)
+    except Exception as e:
+        return f"Could not research company: {e}"
+
+# ── Email drafting ────────────────────────────────────────────────────────────
+
+def draft_email(lead: dict, company_research: str) -> str:
+    """Use Claude to draft a personalised outreach email."""
+    prompt = f"""You are a sales development representative writing a personalised 
+cold outreach email. 
+
+PROSPECT DETAILS:
+- Name: {lead['Name']}
+- Title: {lead['Title']}
+- Company: {lead['Company']}
+- Website: {lead.get('Company Website', '')}
+
+COMPANY RESEARCH:
+{company_research}
+
+SENDER: {SENDER_NAME}
+
+INSTRUCTIONS:
+1. Write a subject line and email body
+2. Reference something specific and real from the company research
+3. Lead with their perspective, not ours — what problem might they have?
+4. Keep it under 150 words
+5. One clear CTA: a 15-minute call
+6. Tone: professional but human, not corporate
+
+Format output as:
+SUBJECT: [subject line here]
+BODY:
+[email body here]
+
+Do NOT use generic phrases like "I hope this email finds you well" 
+or "I wanted to reach out". Be direct and specific."""
+
+    response = claude.messages.create(
+        model="claude-3-5-sonnet-20241022",
+        max_tokens=500,
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response.content[0].text
+
+def parse_email_draft(draft: str) -> tuple[str, str]:
+    """Parse the SUBJECT/BODY format from Claude's output."""
+    lines   = draft.strip().split('\n')
+    subject = ''
+    body    = ''
+    in_body = False
+
+    for line in lines:
+        if line.startswith('SUBJECT:'):
+            subject = line.replace('SUBJECT:', '').strip()
+        elif line.strip() == 'BODY:':
+            in_body = True
+        elif in_body:
+            body += line + '\n'
+
+    return subject.strip(), body.strip()
+
+# ── Slack approval for senior contacts ───────────────────────────────────────
+
+def is_senior_contact(title: str) -> bool:
+    title_upper = title.upper()
+    return any(t.upper() in title_upper for t in SENIOR_TITLES)
+
+def request_slack_approval(lead: dict, subject: str, body: str) -> str:
+    """Post the draft to Slack with approval instructions. Returns 'pending'."""
+    payload = {
+        "blocks": [
+            {
+                "type": "header",
+                "text": {"type": "plain_text", "text": f"📨 Senior Contact — Approval Needed"}
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {"type": "mrkdwn", "text": f"*To:*\n{lead['Name']} ({lead['Title']})"},
+                    {"type": "mrkdwn", "text": f"*Company:*\n{lead['Company']}"},
+                    {"type": "mrkdwn", "text": f"*Email:*\n{lead['Email']}"},
+                ]
+            },
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": f"*Subject:* {subject}"}
+            },
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": f"*Draft email:*\n```{body}```"}
+            },
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", 
+                         "text": "Reply with ✅ to send as-is, or copy/edit and send manually. "
+                                 "The sheet Status column is set to 'Awaiting Approval'."}
+            }
+        ]
+    }
+    requests.post(os.getenv("SLACK_WEBHOOK_URL"), json=payload)
+    return "Awaiting Approval"
+
+# ── Send email ────────────────────────────────────────────────────────────────
+
+def send_email(to_email: str, to_name: str, subject: str, body: str):
+    """Send the outreach email via SMTP."""
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = subject
+    msg['From']    = f"{SENDER_NAME} <{os.getenv('SMTP_USER')}>"
+    msg['To']      = f"{to_name} <{to_email}>"
+
+    full_body = f"{body}\n\n--\n{SENDER_NAME}"
+    msg.attach(MIMEText(full_body, 'plain'))
+
+    with smtplib.SMTP(os.getenv("SMTP_HOST"), int(os.getenv("SMTP_PORT"))) as server:
+        server.starttls()
+        server.login(os.getenv("SMTP_USER"), os.getenv("SMTP_PASSWORD"))
+        server.send_message(msg)
+
+# ── Main agent ────────────────────────────────────────────────────────────────
+
+def run_agent():
+    sheet   = get_sheet()
+    leads   = get_pending_leads(sheet)
+    
+    print(f"Sales Outreach Agent — Found {len(leads)} pending prospects\n")
+
+    for lead in leads:
+        name    = lead['Name']
+        company = lead['Company']
+        email   = lead['Email']
+        title   = lead['Title']
+        website = lead.get('Company Website', company)
+
+        print(f"Processing: {name} ({title}) at {company}")
+
+        # Research the company
+        print(f"  → Researching {company}...")
+        research = research_company(company, website)
+
+        # Draft the email
+        print(f"  → Drafting personalised email...")
+        draft         = draft_email(lead, research)
+        subject, body = parse_email_draft(draft)
+
+        if not subject or not body:
+            print(f"  ⚠️ Failed to parse email draft — skipping")
+            update_row(sheet, lead['row_index'], {'Status': 'Draft Failed'})
+            continue
+
+        # Update sheet with the draft
+        update_row(sheet, lead['row_index'], {
+            'Email Draft': f"Subject: {subject}\n\n{body}",
+            'Status': 'Draft Ready'
+        })
+
+        # Route senior contacts to Slack for approval
+        if is_senior_contact(title):
+            print(f"  → Senior contact — sending to Slack for approval")
+            status = request_slack_approval(lead, subject, body)
+            update_row(sheet, lead['row_index'], {'Status': status})
+
+        # Auto-send for non-senior contacts
+        else:
+            print(f"  → Sending email to {email}...")
+            try:
+                send_email(email, name, subject, body)
+                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+                update_row(sheet, lead['row_index'], {
+                    'Status': 'Sent',
+                    'Sent At': timestamp
+                })
+                print(f"  ✓ Sent successfully")
+            except Exception as e:
+                print(f"  ✗ Send failed: {e}")
+                update_row(sheet, lead['row_index'], {'Status': f'Send Failed: {e}'})
+
+        # Be a good citizen — don't hammer APIs
+        time.sleep(2)
+
+    print(f"\nDone. Check the Google Sheet for results.")
+
+if __name__ == "__main__":
+    run_agent()</code></pre>
+    </div>
+  </section>
+
+  <!-- RUN IT -->
+  <section class="section" id="run" style="scroll-margin-top:80px;">
+    <div class="section-title">Step 4 — Run and Test</div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Add a test row to your sheet</h3>
+          <p>Add one row with your own name, a fake title, a real company (e.g. Apple Inc), and your own email address. Leave Status blank. This lets you see a real personalised email arrive in your own inbox.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Run the agent</h3>
+        </div>
+      </li>
+    </ol>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><code>source venv/bin/activate
+python agent.py</code></pre>
+    </div>
+
+    <p style="margin:12px 0 0;">Expected output:</p>
+
+    <div class="code-block">
+      <div class="code-header"><span class="code-lang">Expected console output</span></div>
+      <pre><code>Sales Outreach Agent — Found 3 pending prospects
+
+Processing: Sarah Chen (VP of Sales) at Acme Corp
+  → Researching Acme Corp...
+  → Drafting personalised email...
+  → Senior contact — sending to Slack for approval
+
+Processing: Tom Baker (Account Manager) at Beta Ltd
+  → Researching Beta Ltd...
+  → Drafting personalised email...
+  → Sending email to tom.baker@betaltd.com...
+  ✓ Sent successfully
+
+Processing: You (Test) at Apple Inc
+  → Researching Apple Inc...
+  → Drafting personalised email...
+  → Sending email to your@email.com...
+  ✓ Sent successfully
+
+Done. Check the Google Sheet for results.</code></pre>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon"></span>
+      <p><strong>Important:</strong> Only run this on real prospects after you've reviewed a few sample drafts and are satisfied with the quality. Check your own email first to see what the output looks like before sending to prospects.</p>
+    </div>
+  </section>
+
+  <!-- EXTEND -->
+  <section class="section" id="extend" style="scroll-margin-top:80px;">
+    <div class="section-title">Extend It</div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px;">
+      <div class="card">
+        <h3>Automated follow-up sequences</h3>
+        <p>Check the "Sent At" column daily. If no response after 3 days, send a follow-up. After 7 more days, send a final breakup email. Three touches, fully automated.</p>
+      </div>
+      <div class="card">
+        <h3>LinkedIn profile research</h3>
+        <p>Use Proxycurl or the LinkedIn API to pull the prospect's recent posts and activities. Include a reference to something they posted — response rates increase dramatically.</p>
+      </div>
+      <div class="card">
+        <h3>A/B test subject lines</h3>
+        <p>Have Claude generate 2 subject line variants. Randomly assign A or B in the sheet. After 50 sends each, analyse open rates and pick the winner.</p>
+      </div>
+      <div class="card">
+        <h3>Reply detection</h3>
+        <p>Add a Gmail poller (similar to the Lead Qualifier) that watches for replies and updates the "Response" column in the sheet automatically. Close the loop on every outreach.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>AgentAtlas &nbsp;·&nbsp; Navigate the world of AI agents &nbsp;·&nbsp; <a href="https://github.com/viveksinha/agent-atlas" target="_blank">GitHub</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
