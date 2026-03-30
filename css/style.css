@@ -159,10 +159,16 @@ nav {
 
 .nav-logo .logo-icon {
   width: 26px; height: 26px;
-  background: var(--black);
+  /* Always dark so the white SVG stroke stays visible in both themes */
+  background: #111111;
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+}
+[data-theme="dark"] .nav-logo .logo-icon { border-color: rgba(255,255,255,0.18); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .nav-logo .logo-icon { border-color: rgba(255,255,255,0.18); }
 }
 
 .nav-logo span { color: var(--gray-500); font-weight: 400; }
