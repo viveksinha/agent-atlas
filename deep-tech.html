@@ -6,180 +6,90 @@
   <title>Deep Tech — AgentAtlas</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* ---- DEEP TECH page-specific overrides ---- */
     .dt-hero {
-      background: linear-gradient(135deg, #070c1a 0%, #0d1b36 60%, #1a0538 100%);
-      padding: 56px 24px 48px;
+      background: var(--white);
+      padding: 48px 24px 44px;
       text-align: center;
-      border-bottom: 1px solid rgba(0,212,240,0.15);
-      position: relative;
-      overflow: hidden;
+      border-bottom: 1px solid var(--gray-200);
     }
-    .dt-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,0.18) 0%, transparent 70%),
-                  radial-gradient(ellipse 60% 50% at 80% 100%, rgba(0,212,240,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .dt-hero h1 { font-size: 2.4rem; color: #fff; font-weight: 800; margin-bottom: 12px; position: relative; }
-    .dt-hero h1 span { background: linear-gradient(135deg, #00d4f0, #b197fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .dt-hero p { color: #94a3b8; font-size: 1.1rem; max-width: 680px; margin: 0 auto 28px; position: relative; }
-    .dt-hero .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; position: relative; }
-    .dt-hero .hero-tag { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #b0c4de; font-size: 0.8rem; padding: 5px 14px; border-radius: 20px; }
+    .dt-hero::before { display: none; }
+    .dt-hero h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); color: var(--black); font-weight: 700; margin-bottom: 12px; letter-spacing: -1px; }
+    .dt-hero h1 span { color: var(--gray-500); }
+    .dt-hero p { color: var(--gray-500); font-size: 1rem; max-width: 620px; margin: 0 auto 24px; line-height: 1.6; }
+    .dt-hero .hero-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+    .dt-hero .hero-tag { background: var(--gray-100); border: 1px solid var(--gray-200); color: var(--gray-500); font-size: 0.75rem; font-weight: 500; padding: 3px 12px; border-radius: 4px; }
 
-    /* ---- QUICK NAV ---- */
-    .quick-nav {
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      position: sticky;
-      top: 64px;
-      z-index: 90;
-    }
-    .quick-nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-    }
-    .quick-nav a {
-      display: block;
-      padding: 14px 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-decoration: none;
-      border-bottom: 3px solid transparent;
-      white-space: nowrap;
-      transition: color 0.2s, border-color 0.2s;
-    }
+    .quick-nav { background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-200); padding: 0 24px; position: sticky; top: 56px; z-index: 90; }
+    .quick-nav-inner { max-width: 1100px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; }
+    .quick-nav a { display: block; padding: 10px 16px; font-size: 0.8rem; font-weight: 500; color: var(--gray-400); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 150ms ease; }
     .quick-nav a:hover { color: var(--black); border-bottom-color: var(--black); }
 
-    /* ---- PAPER CARD ---- */
-    .paper-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 24px;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .paper-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-    .paper-year {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--black);
-      background: rgba(124,58,237,0.08);
-      border: 1px solid rgba(124,58,237,0.2);
-      border-radius: 6px;
-      padding: 4px 8px;
-      white-space: nowrap;
-      margin-top: 2px;
-    }
-    .paper-body h3 { font-size: 0.97rem; font-weight: 700; margin-bottom: 4px; color: var(--text); }
-    .paper-body .paper-authors { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
-    .paper-body p { font-size: 0.85rem; color: #4a5568; line-height: 1.55; margin-bottom: 8px; }
-    .paper-body a { font-size: 0.82rem; color: var(--black); font-weight: 600; text-decoration: none; }
+    .paper-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 18px 22px; display: flex; gap: 14px; align-items: flex-start; transition: border-color 150ms ease; }
+    .paper-card:hover { border-color: var(--gray-700); }
+    .paper-year { font-size: 0.68rem; font-weight: 700; color: var(--gray-700); background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 4px; padding: 3px 7px; white-space: nowrap; margin-top: 2px; }
+    .paper-body h3 { font-size: 0.92rem; font-weight: 600; margin-bottom: 3px; color: var(--black); }
+    .paper-body .paper-authors { font-size: 0.75rem; color: var(--gray-400); margin-bottom: 6px; }
+    .paper-body p { font-size: 0.84rem; color: var(--gray-500); line-height: 1.55; margin-bottom: 8px; }
+    .paper-body a { font-size: 0.8rem; color: var(--black); font-weight: 600; text-decoration: none; }
     .paper-body a:hover { text-decoration: underline; }
-    .paper-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-    .paper-tag {
-      font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 4px;
-      background: var(--off-white); color: var(--text-muted); border: 1px solid var(--border);
-    }
-    .paper-tag.must { background: rgba(0,212,240,0.08); color: var(--black); border-color: rgba(0,212,240,0.3); }
-    .paper-tag.seminal { background: rgba(249,115,22,0.08); color: #c2410c; border-color: rgba(249,115,22,0.25); }
-    .paper-tag.new { background: rgba(16,185,129,0.08); color: #065f46; border-color: rgba(16,185,129,0.25); }
+    .paper-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+    .paper-tag { font-size: 0.68rem; font-weight: 600; padding: 2px 7px; border-radius: 3px; background: var(--gray-100); color: var(--gray-500); }
+    .paper-tag.must { background: var(--gray-900); color: var(--white); }
+    .paper-tag.seminal { background: var(--gray-200); color: var(--gray-700); }
+    .paper-tag.new { background: #f0fdf4; color: #15803d; }
 
-    /* ---- BENCHMARK TABLE ---- */
-    .benchmark-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-    .benchmark-table th {
-      background: var(--navy-mid);
-      color: var(--teal-light);
-      padding: 10px 16px;
-      text-align: left;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .benchmark-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .benchmark-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    .benchmark-table th { background: var(--gray-50); color: var(--gray-500); padding: 10px 14px; text-align: left; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; border-bottom: 1px solid var(--gray-200); }
+    .benchmark-table td { padding: 10px 14px; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
     .benchmark-table tr:last-child td { border-bottom: none; }
-    .benchmark-table tr:hover td { background: #f7f9fc; }
-    .bm-name { font-weight: 700; color: var(--text); }
-    .bm-link { font-size: 0.78rem; color: var(--black); }
+    .benchmark-table tr:hover td { background: var(--gray-50); }
+    .bm-name { font-weight: 600; color: var(--black); }
+    .bm-link { font-size: 0.76rem; }
     .bm-link a { color: var(--black); text-decoration: none; }
     .bm-link a:hover { text-decoration: underline; }
-    .bm-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
-    .bm-badge.reasoning { background: rgba(124,58,237,0.1); color: var(--black); }
-    .bm-badge.coding { background: rgba(0,212,240,0.1); color: var(--black); }
-    .bm-badge.knowledge { background: rgba(249,115,22,0.1); color: #c2410c; }
-    .bm-badge.agent { background: rgba(16,185,129,0.1); color: #065f46; }
-    .bm-badge.safety { background: rgba(239,68,68,0.1); color: #b91c1c; }
-    .bm-badge.multimodal { background: rgba(236,72,153,0.1); color: #9d174d; }
-    .bm-badge.embed { background: rgba(99,102,241,0.1); color: #4338ca; }
+    .bm-badge { display: inline-block; font-size: 0.66rem; font-weight: 600; padding: 2px 6px; border-radius: 3px; background: var(--gray-100); color: var(--gray-700); }
+    .bm-badge.reasoning { background: #fdf2f8; color: #9d174d; }
+    .bm-badge.coding { background: #f0fdf4; color: #15803d; }
+    .bm-badge.knowledge { background: #fefce8; color: #a16207; }
+    .bm-badge.agent { background: var(--gray-900); color: var(--white); }
+    .bm-badge.safety { background: #fef2f2; color: #b91c1c; }
+    .bm-badge.multimodal { background: #fdf2f8; color: #9d174d; }
+    .bm-badge.embed { background: #eef2ff; color: #4338ca; }
 
-    /* ---- CONCEPT CARD (for architecture, patterns) ---- */
-    .concept-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--black);
-      border-radius: var(--radius);
-      padding: 20px 24px;
-    }
-    .concept-card.purple { border-left-color: var(--black); }
-    .concept-card.orange { border-left-color: var(--orange); }
-    .concept-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
-    .concept-card .mono { font-family: 'Courier New', monospace; font-size: 0.82rem; color: var(--black); background: rgba(0,212,240,0.06); padding: 2px 7px; border-radius: 4px; }
-    .concept-card p { font-size: 0.875rem; color: #4a5568; line-height: 1.6; margin-top: 8px; }
-    .concept-card ul { font-size: 0.875rem; color: #4a5568; line-height: 1.7; padding-left: 20px; margin-top: 8px; }
+    .concept-card { background: var(--white); border: 1px solid var(--gray-200); border-left: 3px solid var(--black); border-radius: var(--radius); padding: 18px 22px; }
+    .concept-card.purple { border-left-color: var(--gray-400); }
+    .concept-card.orange { border-left-color: var(--gray-700); }
+    .concept-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; color: var(--black); }
+    .concept-card .mono { font-family: var(--mono); font-size: 0.78rem; color: var(--gray-700); background: var(--gray-100); padding: 2px 6px; border-radius: 3px; }
+    .concept-card p { font-size: 0.84rem; color: var(--gray-500); line-height: 1.6; margin-top: 6px; }
+    .concept-card ul { font-size: 0.84rem; color: var(--gray-500); line-height: 1.7; padding-left: 18px; margin-top: 6px; }
 
-    /* ---- LEADERBOARD CARD ---- */
-    .leaderboard-card {
-      background: linear-gradient(135deg, var(--black) 0%, var(--navy-mid) 100%);
-      border: 1px solid rgba(0,212,240,0.2);
-      border-radius: var(--radius);
-      padding: 22px 24px;
-      color: #fff;
-    }
-    .leaderboard-card h3 { font-size: 1rem; font-weight: 700; color: var(--teal-light); margin-bottom: 6px; }
-    .leaderboard-card p { font-size: 0.85rem; color: #94a3b8; line-height: 1.55; margin-bottom: 12px; }
-    .leaderboard-card a { display: inline-block; font-size: 0.82rem; font-weight: 700; color: var(--black); text-decoration: none; border: 1px solid rgba(0,212,240,0.3); border-radius: 6px; padding: 5px 14px; }
-    .leaderboard-card a:hover { background: rgba(0,212,240,0.1); }
-    .lb-stat { font-size: 1.4rem; font-weight: 800; color: #fff; }
-    .lb-stat-label { font-size: 0.75rem; color: #64748b; }
+    .leaderboard-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 20px 22px; transition: border-color 150ms ease; }
+    .leaderboard-card:hover { border-color: var(--gray-700); }
+    .leaderboard-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--black); margin-bottom: 4px; }
+    .leaderboard-card p { font-size: 0.82rem; color: var(--gray-500); line-height: 1.5; margin-bottom: 12px; }
+    .leaderboard-card a { display: inline-block; font-size: 0.8rem; font-weight: 600; color: var(--black); text-decoration: none; border: 1px solid var(--gray-200); border-radius: 6px; padding: 5px 14px; transition: border-color 150ms ease; }
+    .leaderboard-card a:hover { border-color: var(--gray-700); }
+    .lb-stat { font-size: 1.3rem; font-weight: 700; color: var(--black); }
+    .lb-stat-label { font-size: 0.72rem; color: var(--gray-400); }
 
-    /* ---- BLOG CARD ---- */
-    .blog-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .blog-card:hover { box-shadow: var(--shadow); }
+    .blog-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 18px 22px; display: flex; flex-direction: column; gap: 6px; transition: border-color 150ms ease; }
+    .blog-card:hover { border-color: var(--gray-700); }
     .blog-author { display: flex; align-items: center; gap: 10px; }
-    .blog-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-    .blog-author-name { font-size: 0.85rem; font-weight: 700; }
-    .blog-author-role { font-size: 0.75rem; color: var(--text-muted); }
-    .blog-card h3 { font-size: 0.95rem; font-weight: 700; line-height: 1.4; }
-    .blog-card p { font-size: 0.84rem; color: #4a5568; line-height: 1.55; }
-    .blog-card a { font-size: 0.82rem; color: var(--black); font-weight: 600; text-decoration: none; }
+    .blog-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; color: var(--white); }
+    .blog-author-name { font-size: 0.84rem; font-weight: 600; color: var(--black); }
+    .blog-author-role { font-size: 0.72rem; color: var(--gray-400); }
+    .blog-card h3 { font-size: 0.9rem; font-weight: 600; line-height: 1.4; color: var(--black); }
+    .blog-card p { font-size: 0.82rem; color: var(--gray-500); line-height: 1.5; }
+    .blog-card a { font-size: 0.8rem; color: var(--black); font-weight: 600; text-decoration: none; }
     .blog-card a:hover { text-decoration: underline; }
 
-    /* ---- SECTION ANCHOR ---- */
     .section-anchor { scroll-margin-top: 120px; }
 
     @media (max-width: 640px) {
-      .dt-hero h1 { font-size: 1.7rem; }
+      .dt-hero h1 { font-size: 1.6rem; }
       .paper-card { flex-direction: column; }
-      .benchmark-table { font-size: 0.78rem; }
+      .benchmark-table { font-size: 0.76rem; }
     }
   </style>
 </head>
@@ -205,7 +115,7 @@
 
 <!-- HERO -->
 <div class="dt-hero">
-  <div style="font-size:2.8rem; margin-bottom:12px;"></div>
+  
   <h1>Deep Tech &amp; <span>Research</span></h1>
   <p>Foundational papers, live benchmarks, architecture internals, agent reasoning patterns, and safety research — for engineers and researchers who want to go beyond the surface.</p>
   <div class="hero-tags">
@@ -241,9 +151,9 @@
   ============================================================ -->
   <section class="section section-anchor" id="papers">
     <div class="section-title"> Seminal Papers — Must Read</div>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">The papers that shaped how modern LLMs and agents work. Not optional reading — these are the foundations everything else builds on.</p>
+    <p style="color:var(--gray-400); font-size:0.9rem; margin-bottom:24px;">The papers that shaped how modern LLMs and agents work. Not optional reading — these are the foundations everything else builds on.</p>
 
-    <div style="font-size:0.875rem; font-weight:700; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:.04em;"> Foundational Architecture</div>
+    <div style="font-size:0.875rem; font-weight:700; color:var(--gray-400); margin-bottom:12px; text-transform:uppercase; letter-spacing:.04em;"> Foundational Architecture</div>
     <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:32px;">
 
       <div class="paper-card">
@@ -314,7 +224,7 @@
 
     </div>
 
-    <div style="font-size:0.875rem; font-weight:700; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:.04em;"> Reasoning &amp; Prompting</div>
+    <div style="font-size:0.875rem; font-weight:700; color:var(--gray-400); margin-bottom:12px; text-transform:uppercase; letter-spacing:.04em;"> Reasoning &amp; Prompting</div>
     <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:32px;">
 
       <div class="paper-card">
@@ -350,7 +260,7 @@
 
     </div>
 
-    <div style="font-size:0.875rem; font-weight:700; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:.04em;"> Agents &amp; Tool Use</div>
+    <div style="font-size:0.875rem; font-weight:700; color:var(--gray-400); margin-bottom:12px; text-transform:uppercase; letter-spacing:.04em;"> Agents &amp; Tool Use</div>
     <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:32px;">
 
       <div class="paper-card">
@@ -434,7 +344,7 @@
 
     </div>
 
-    <div style="font-size:0.875rem; font-weight:700; color:var(--text-muted); margin-bottom:12px; text-transform:uppercase; letter-spacing:.04em;"> RAG &amp; Memory</div>
+    <div style="font-size:0.875rem; font-weight:700; color:var(--gray-400); margin-bottom:12px; text-transform:uppercase; letter-spacing:.04em;"> RAG &amp; Memory</div>
     <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:8px;">
 
       <div class="paper-card">
@@ -477,7 +387,7 @@
   ============================================================ -->
   <section class="section section-anchor" id="architecture">
     <div class="section-title"> Architecture Internals</div>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">How LLMs actually work under the hood — the components, tradeoffs, and optimizations that matter for engineers.</p>
+    <p style="color:var(--gray-400); font-size:0.9rem; margin-bottom:24px;">How LLMs actually work under the hood — the components, tradeoffs, and optimizations that matter for engineers.</p>
 
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:16px; margin-bottom:32px;">
 
@@ -581,56 +491,56 @@
   ============================================================ -->
   <section class="section section-anchor" id="agent-patterns">
     <div class="section-title"> Agent Reasoning Patterns</div>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">The design patterns that separate well-behaved production agents from brittle demos. Each pattern trades off token cost, reliability, and task complexity.</p>
+    <p style="color:var(--gray-400); font-size:0.9rem; margin-bottom:24px;">The design patterns that separate well-behaved production agents from brittle demos. Each pattern trades off token cost, reliability, and task complexity.</p>
 
     <div style="overflow-x:auto; margin-bottom:24px;">
-      <table style="width:100%; border-collapse:collapse; font-size:0.875rem; background:#fff; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);">
+      <table style="width:100%; border-collapse:collapse; font-size:0.875rem; background:#fff; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-sm);">
         <thead>
-          <tr style="background:var(--navy-mid);">
-            <th style="padding:12px 16px; color:var(--teal-light); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Pattern</th>
-            <th style="padding:12px 16px; color:var(--teal-light); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Loop</th>
-            <th style="padding:12px 16px; color:var(--teal-light); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Best For</th>
-            <th style="padding:12px 16px; color:var(--teal-light); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Min Model</th>
-            <th style="padding:12px 16px; color:var(--teal-light); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Token Cost</th>
+          <tr style="background:var(--gray-50);">
+            <th style="padding:12px 16px; color:var(--gray-500); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Pattern</th>
+            <th style="padding:12px 16px; color:var(--gray-500); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Loop</th>
+            <th style="padding:12px 16px; color:var(--gray-500); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Best For</th>
+            <th style="padding:12px 16px; color:var(--gray-500); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Min Model</th>
+            <th style="padding:12px 16px; color:var(--gray-500); text-align:left; font-size:0.78rem; letter-spacing:.05em; text-transform:uppercase;">Token Cost</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="border-bottom:1px solid var(--border);">
+          <tr style="border-bottom:1px solid var(--gray-200);">
             <td style="padding:12px 16px; font-weight:700;">Prompt Chaining</td>
             <td style="padding:12px 16px; font-family:monospace; font-size:0.82rem;">A → B → C (linear)</td>
             <td style="padding:12px 16px; color:#4a5568;">Sequential tasks with clear stages. Document processing pipelines.</td>
             <td style="padding:12px 16px;">Any</td>
             <td style="padding:12px 16px; color:var(--success);">Low</td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border);">
+          <tr style="border-bottom:1px solid var(--gray-200);">
             <td style="padding:12px 16px; font-weight:700;">ReAct</td>
             <td style="padding:12px 16px; font-family:monospace; font-size:0.82rem;">Think → Act → Observe (loop)</td>
             <td style="padding:12px 16px; color:#4a5568;">Multi-step tool use. Research agents, data lookup, web search.</td>
             <td style="padding:12px 16px;">4B+</td>
             <td style="padding:12px 16px; color:var(--warning);">Medium</td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border);">
+          <tr style="border-bottom:1px solid var(--gray-200);">
             <td style="padding:12px 16px; font-weight:700;">Chain of Thought (CoT)</td>
             <td style="padding:12px 16px; font-family:monospace; font-size:0.82rem;">Think step-by-step → Answer</td>
             <td style="padding:12px 16px; color:#4a5568;">Math, logic, structured reasoning. Improves accuracy on MMLU, GSM8K.</td>
             <td style="padding:12px 16px;">7B+</td>
             <td style="padding:12px 16px; color:var(--warning);">Medium</td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border);">
+          <tr style="border-bottom:1px solid var(--gray-200);">
             <td style="padding:12px 16px; font-weight:700;">Tree of Thoughts (ToT)</td>
             <td style="padding:12px 16px; font-family:monospace; font-size:0.82rem;">Generate branches → Score → Expand best</td>
             <td style="padding:12px 16px; color:#4a5568;">Creative, ambiguous, or open-ended problems. Planning with uncertainty.</td>
             <td style="padding:12px 16px;">14B+</td>
             <td style="padding:12px 16px; color:#ef4444;">High</td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border);">
+          <tr style="border-bottom:1px solid var(--gray-200);">
             <td style="padding:12px 16px; font-weight:700;">Reflexion</td>
             <td style="padding:12px 16px; font-family:monospace; font-size:0.82rem;">Act → Critique → Store → Retry</td>
             <td style="padding:12px 16px; color:#4a5568;">Code generation, multi-step reasoning where feedback is available.</td>
             <td style="padding:12px 16px;">7B+</td>
             <td style="padding:12px 16px; color:var(--warning);">Medium</td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border);">
+          <tr style="border-bottom:1px solid var(--gray-200);">
             <td style="padding:12px 16px; font-weight:700;">Parallelization</td>
             <td style="padding:12px 16px; font-family:monospace; font-size:0.82rem;">Spawn N agents in parallel → Aggregate</td>
             <td style="padding:12px 16px; color:#4a5568;">Tasks decomposable into independent subtasks. Research synthesis.</td>
@@ -697,9 +607,9 @@
   ============================================================ -->
   <section class="section section-anchor" id="benchmarks">
     <div class="section-title"> Benchmarks Explained</div>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">What the model cards and leaderboards actually measure — and what they miss. Understand these before evaluating any LLM for production use.</p>
+    <p style="color:var(--gray-400); font-size:0.9rem; margin-bottom:24px;">What the model cards and leaderboards actually measure — and what they miss. Understand these before evaluating any LLM for production use.</p>
 
-    <div style="background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; overflow-x:auto; margin-bottom:24px;">
+    <div style="background:#fff; border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden; overflow-x:auto; margin-bottom:24px;">
       <table class="benchmark-table">
         <thead>
           <tr>
@@ -712,7 +622,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><div class="bm-name">MMLU</div><div style="font-size:0.75rem;color:var(--text-muted);">Massive Multitask Language Understanding</div></td>
+            <td><div class="bm-name">MMLU</div><div style="font-size:0.75rem;color:var(--gray-400);">Massive Multitask Language Understanding</div></td>
             <td><span class="bm-badge knowledge">Knowledge</span></td>
             <td>57-subject MCQ covering STEM, humanities, social sciences, law, medicine. Tests breadth of world knowledge.</td>
             <td>Near-saturated at top. GPT-4 scores ~87%. Use MMLU-Pro for harder discrimination.</td>
@@ -740,7 +650,7 @@
             <td class="bm-link"><a href="https://www.swebench.com" target="_blank">Live →</a></td>
           </tr>
           <tr>
-            <td><div class="bm-name">GPQA Diamond</div><div style="font-size:0.75rem;color:var(--text-muted);">Graduate-Level Google-Proof Q&amp;A</div></td>
+            <td><div class="bm-name">GPQA Diamond</div><div style="font-size:0.75rem;color:var(--gray-400);">Graduate-Level Google-Proof Q&amp;A</div></td>
             <td><span class="bm-badge reasoning">Reasoning</span></td>
             <td>448 expert-level MCQs in biology, chemistry, and physics written by PhDs. Designed to be Google-proof — you can't look up the answer.</td>
             <td>Human experts score ~65%. GPT-4o hits ~53%, o3 ~87%. Strong signal for scientific reasoning depth.</td>
@@ -775,7 +685,7 @@
             <td class="bm-link"><a href="https://crfm.stanford.edu/helm/latest/" target="_blank">Live →</a></td>
           </tr>
           <tr>
-            <td><div class="bm-name">MTEB</div><div style="font-size:0.75rem;color:var(--text-muted);">Massive Text Embedding Benchmark</div></td>
+            <td><div class="bm-name">MTEB</div><div style="font-size:0.75rem;color:var(--gray-400);">Massive Text Embedding Benchmark</div></td>
             <td><span class="bm-badge embed">Embeddings</span></td>
             <td>56 datasets across 8 embedding tasks: retrieval, clustering, classification, reranking, STS, summarization, bitext mining, pair classification.</td>
             <td>The definitive benchmark for choosing an embedding model for RAG. text-embedding-3-large and voyage-3 dominate. Essential for RAG system design.</td>
@@ -810,7 +720,7 @@
   ============================================================ -->
   <section class="section section-anchor" id="leaderboards">
     <div class="section-title"> Live Leaderboards &amp; Trackers</div>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">Bookmark these. They update in real-time as new models are released and evaluated.</p>
+    <p style="color:var(--gray-400); font-size:0.9rem; margin-bottom:24px;">Bookmark these. They update in real-time as new models are released and evaluated.</p>
 
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px;">
 
@@ -900,13 +810,13 @@
   ============================================================ -->
   <section class="section section-anchor" id="blogs">
     <div class="section-title"> Expert Blogs &amp; Writing Worth Following</div>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">The people whose writing consistently advances understanding — not just summarizing news.</p>
+    <p style="color:var(--gray-400); font-size:0.9rem; margin-bottom:24px;">The people whose writing consistently advances understanding — not just summarizing news.</p>
 
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px;">
 
       <div class="blog-card">
         <div class="blog-author">
-          <div class="blog-avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">L</div>
+          <div class="blog-avatar" style="background:#444;">L</div>
           <div><div class="blog-author-name">Lilian Weng</div><div class="blog-author-role">VP of Safety @ OpenAI</div></div>
         </div>
         <h3>Lil'Log — lilianweng.github.io</h3>
@@ -917,7 +827,7 @@
 
       <div class="blog-card">
         <div class="blog-author">
-          <div class="blog-avatar" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);">A</div>
+          <div class="blog-avatar" style="background:#555;">A</div>
           <div><div class="blog-author-name">Andrej Karpathy</div><div class="blog-author-role">ex-OpenAI, ex-Tesla AI · Eureka Labs founder</div></div>
         </div>
         <h3>karpathy.bearblog.dev</h3>
@@ -928,7 +838,7 @@
 
       <div class="blog-card">
         <div class="blog-author">
-          <div class="blog-avatar" style="background:linear-gradient(135deg,#10b981,#059669);">S</div>
+          <div class="blog-avatar" style="background:#666;">S</div>
           <div><div class="blog-author-name">Sebastian Ruder</div><div class="blog-author-role">Research Scientist @ Google DeepMind</div></div>
         </div>
         <h3>ruder.io</h3>
@@ -939,7 +849,7 @@
 
       <div class="blog-card">
         <div class="blog-author">
-          <div class="blog-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706);">S</div>
+          <div class="blog-avatar" style="background:#555;">S</div>
           <div><div class="blog-author-name">Sebastian Raschka</div><div class="blog-author-role">Staff Research Engineer @ Lightning AI</div></div>
         </div>
         <h3>sebastianraschka.com/blog</h3>
@@ -950,7 +860,7 @@
 
       <div class="blog-card">
         <div class="blog-author">
-          <div class="blog-avatar" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);">J</div>
+          <div class="blog-avatar" style="background:#444;">J</div>
           <div><div class="blog-author-name">Jay Alammar</div><div class="blog-author-role">ML Research Engineer</div></div>
         </div>
         <h3>jalammar.github.io</h3>
@@ -961,7 +871,7 @@
 
       <div class="blog-card">
         <div class="blog-author">
-          <div class="blog-avatar" style="background:linear-gradient(135deg,#ef4444,#dc2626);">S</div>
+          <div class="blog-avatar" style="background:#666;">S</div>
           <div><div class="blog-author-name">Simon Willison</div><div class="blog-author-role">Creator of Django, LLM CLI tool</div></div>
         </div>
         <h3>simonwillison.net</h3>
@@ -972,7 +882,7 @@
 
       <div class="blog-card">
         <div class="blog-author">
-          <div class="blog-avatar" style="background:linear-gradient(135deg,#0ea5e9,#6366f1);">H</div>
+          <div class="blog-avatar" style="background:#444;">H</div>
           <div><div class="blog-author-name">Hugging Face Blog</div><div class="blog-author-role">Research team blog</div></div>
         </div>
         <h3>huggingface.co/blog</h3>
@@ -983,7 +893,7 @@
 
       <div class="blog-card">
         <div class="blog-author">
-          <div class="blog-avatar" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">A</div>
+          <div class="blog-avatar" style="background:#333;">A</div>
           <div><div class="blog-author-name">Anthropic Research</div><div class="blog-author-role">Safety &amp; engineering research</div></div>
         </div>
         <h3>anthropic.com/research</h3>
@@ -1000,7 +910,7 @@
   ============================================================ -->
   <section class="section section-anchor" id="safety">
     <div class="section-title"> Safety, Alignment &amp; Interpretability</div>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">The research ensuring powerful agents don't behave in unintended ways — increasingly important as agents take real-world actions.</p>
+    <p style="color:var(--gray-400); font-size:0.9rem; margin-bottom:24px;">The research ensuring powerful agents don't behave in unintended ways — increasingly important as agents take real-world actions.</p>
 
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; margin-bottom:24px;">
 
@@ -1100,7 +1010,7 @@
   ============================================================ -->
   <section class="section section-anchor" id="llmops">
     <div class="section-title"> LLMOps &amp; Production Engineering</div>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">The gap between a working demo and a reliable production system. Infrastructure, evaluation, fine-tuning, and observability for real deployments.</p>
+    <p style="color:var(--gray-400); font-size:0.9rem; margin-bottom:24px;">The gap between a working demo and a reliable production system. Infrastructure, evaluation, fine-tuning, and observability for real deployments.</p>
 
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; margin-bottom:24px;">
 
@@ -1148,52 +1058,52 @@
 
     </div>
 
-    <div style="background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:24px;">
-      <div style="font-size:0.875rem; font-weight:700; margin-bottom:16px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.04em;">RAG vs Fine-Tuning Decision Framework</div>
+    <div style="background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius); padding:24px;">
+      <div style="font-size:0.875rem; font-weight:700; margin-bottom:16px; color:var(--gray-400); text-transform:uppercase; letter-spacing:.04em;">RAG vs Fine-Tuning Decision Framework</div>
       <div style="overflow-x:auto;">
         <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
           <thead>
-            <tr style="background:var(--off-white);">
-              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--border);">Dimension</th>
-              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--border); color:var(--black);">RAG</th>
-              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--border); color:var(--black);">Fine-Tuning</th>
+            <tr style="background:var(--gray-100);">
+              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--gray-200);">Dimension</th>
+              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--gray-200); color:var(--black);">RAG</th>
+              <th style="padding:10px 14px; text-align:left; border-bottom:2px solid var(--gray-200); color:var(--black);">Fine-Tuning</th>
             </tr>
           </thead>
           <tbody>
-            <tr style="border-bottom:1px solid var(--border);">
+            <tr style="border-bottom:1px solid var(--gray-200);">
               <td style="padding:10px 14px; font-weight:600;">Knowledge freshness</td>
               <td style="padding:10px 14px; color:#065f46;"> Real-time, always current</td>
               <td style="padding:10px 14px; color:#92400e;">Baked in at training time</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);">
+            <tr style="border-bottom:1px solid var(--gray-200);">
               <td style="padding:10px 14px; font-weight:600;">Knowledge size</td>
               <td style="padding:10px 14px; color:#065f46;"> Unlimited (external DB)</td>
               <td style="padding:10px 14px; color:#92400e;">Limited by context/capacity</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);">
+            <tr style="border-bottom:1px solid var(--gray-200);">
               <td style="padding:10px 14px; font-weight:600;">Response style / tone</td>
               <td style="padding:10px 14px; color:#92400e;">Harder to control</td>
               <td style="padding:10px 14px; color:#065f46;"> Strong style consistency</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);">
+            <tr style="border-bottom:1px solid var(--gray-200);">
               <td style="padding:10px 14px; font-weight:600;">Task specialization</td>
               <td style="padding:10px 14px; color:#92400e;">General behavior</td>
               <td style="padding:10px 14px; color:#065f46;"> Deep task expertise</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);">
+            <tr style="border-bottom:1px solid var(--gray-200);">
               <td style="padding:10px 14px; font-weight:600;">Citability / traceability</td>
               <td style="padding:10px 14px; color:#065f46;"> Source attribution built-in</td>
               <td style="padding:10px 14px; color:#92400e;">Hard to attribute</td>
             </tr>
-            <tr style="border-bottom:1px solid var(--border);">
+            <tr style="border-bottom:1px solid var(--gray-200);">
               <td style="padding:10px 14px; font-weight:600;">Cost to update</td>
               <td style="padding:10px 14px; color:#065f46;"> Update index only</td>
               <td style="padding:10px 14px; color:#92400e;">Retrain or re-fine-tune</td>
             </tr>
             <tr>
               <td style="padding:10px 14px; font-weight:600;">Recommended when</td>
-              <td style="padding:10px 14px; color:var(--text-muted); font-style:italic;">Docs change often, need citations, broad knowledge base</td>
-              <td style="padding:10px 14px; color:var(--text-muted); font-style:italic;">Consistent format, specialized domain, style/tone control</td>
+              <td style="padding:10px 14px; color:var(--gray-400); font-style:italic;">Docs change often, need citations, broad knowledge base</td>
+              <td style="padding:10px 14px; color:var(--gray-400); font-style:italic;">Consistent format, specialized domain, style/tone control</td>
             </tr>
           </tbody>
         </table>
@@ -1204,7 +1114,7 @@
 </div>
 
 <footer>
-  <p>AgentAtlas &nbsp;·&nbsp; Navigate the world of AI agents &nbsp;·&nbsp; <a href="https://github.com/viveksinha/agentic-ai-guide" target="_blank">GitHub</a></p>
+  <p>AgentAtlas &nbsp;·&nbsp; Navigate the world of AI agents &nbsp;·&nbsp; <a href="https://github.com/viveksinha/agent-atlas" target="_blank">GitHub</a></p>
 </footer>
 <script src="js/main.js"></script>
 </body>
