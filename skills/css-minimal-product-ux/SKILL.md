@@ -10,10 +10,10 @@ description: >-
 
 # Minimal product CSS and UX (portable)
 
-This skill encodes **design and implementation rules** distilled from a production
-minimal stylesheet pattern (neutral palette, system typography, token-driven
-light/dark). It is **domain-agnostic**: apply the same rules whether the product
-is travel, SaaS, internal tools, or content sites.
+This skill encodes **design and implementation rules** for a restrained,
+product-grade UI: neutral palette, system typography, token-driven light/dark,
+and accessible interactions. It is **domain-agnostic** — use the same rules for
+SaaS, internal tools, marketing, docs, or content sites.
 
 ## When agents should use this skill
 
@@ -104,21 +104,24 @@ When implementing or editing UI:
 4. **Contrast check** — Muted text on muted backgrounds is a common failure; use a darker gray token for small text if needed.
 5. **Semantic HTML** — `nav`, `main`, `section`, heading levels in order; buttons for actions, anchors for navigation.
 
-## Importing this skill into another project (Cursor)
+## Where to install the skill (Cursor)
 
-1. Copy the folder `skills/css-minimal-product-ux/` into your repo’s `.cursor/skills/` directory (create `skills` if needed).
-2. Restart Cursor or reload the window so the skill is discovered.
-3. Optional: copy `tokens-starter.css` into your app’s styles and extend tokens for your brand (one accent color is enough).
+Cursor loads skills from `.cursor/skills/<skill-name>/SKILL.md`. Put this folder
+there (create `.cursor/skills/` if needed). Reload the editor window if the skill
+does not appear immediately.
 
-Path after copy:
+Optional companion file in the **same folder** as `SKILL.md`:
 
 ```text
-your-project/.cursor/skills/css-minimal-product-ux/SKILL.md
-your-project/.cursor/skills/css-minimal-product-ux/tokens-starter.css
+.cursor/skills/css-minimal-product-ux/SKILL.md
+.cursor/skills/css-minimal-product-ux/tokens-starter.css
 ```
 
-For **Codex** or other tools, the same `SKILL.md` can live under that tool’s
-skills directory if documented in their format; the rules in the body remain valid.
+Import `tokens-starter.css` into your app’s styles only if you want the starter
+tokens; extend variables for your brand (one accent color is often enough).
+
+For other assistants or tools, place `SKILL.md` (and optional companion assets)
+where that tool expects skills; the rules in the body stay the same.
 
 ## Companion file
 
