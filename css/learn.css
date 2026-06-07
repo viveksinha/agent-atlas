@@ -323,18 +323,15 @@
   margin: 24px 0 8px;
 }
 .learn-path-step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
   background: var(--gray-50);
   border: 1px solid var(--gray-200);
   border-radius: var(--radius);
   padding: 16px 18px;
 }
-.learn-path-step .step-num {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--gray-400);
-  margin-bottom: 6px;
-}
-.learn-path-step p {
+.learn-path-step .step-content p {
   font-size: 0.84rem;
   color: var(--gray-700);
   margin: 0;
