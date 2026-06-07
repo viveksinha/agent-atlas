@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Part 2 — Practice — Learn — AgentAtlas</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/learn.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      AgentAtlas
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../learn.html">Learn</a></li>
+      <li><a href="../resources.html">Resources</a></li>
+      <li><a href="../tools.html">Tools</a></li>
+      <li><a href="../examples.html">Examples</a></li>
+      <li><a href="../deep-tech.html">Deep Tech</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="learn-hero">
+  <div class="breadcrumb" style="margin-bottom:14px; font-size:0.8rem;"><a href="../index.html">Home</a> › <a href="../learn.html">Learn</a> › Part 2 — Practice</div>
+  <h1>Part 2 — Practice</h1>
+  <p>Sections J–S · Tools, MCP, models, skills, security, and workflows</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Beginner</span>
+    <span class="hero-tag">Cursor &amp; VS Code</span>
+    <span class="hero-tag">25 Sections</span>
+  </div>
+</div>
+
+<div class="learn-progress">Part 2 of 3 · Practice</div>
+
+<nav class="learn-quick-nav" aria-label="Section navigation">
+  <div class="learn-quick-nav-inner">
+      <a href="#j-tools-how-agents-take-action-in-the-real-world">J. Tools</a>
+      <a href="#k-mcp-connecting-agents-to-your-apps">K. MCP</a>
+      <a href="#l-models-picking-the-right-brain-for-the-job">L. Models</a>
+      <a href="#m-human-in-the-loop-when-to-approve-when-to-auto-run">M. HITL</a>
+      <a href="#n-building-your-first-skill">N. First skill</a>
+      <a href="#o-when-things-go-wrong-common-agent-failures">O. Failures</a>
+      <a href="#p-memory-across-sessions-what-persists-vs-what-doesnt">P. Memory</a>
+      <a href="#q-security-privacy-basics">Q. Security</a>
+      <a href="#r-evaluating-an-agent-is-it-actually-working">R. Evaluation</a>
+      <a href="#s-from-one-agent-to-a-workflow-chaining-steps-together">S. Workflows</a>
+  </div>
+</nav>
+
+<div class="container learn-container">
+  <article class="learn-prose">
+<p class="learn-intro"><em>Continues from [AI_Agents_Primer_Part1.md](./AI_Agents_Primer_Part1.md). Part 1 covered LLMs, agents, prompts, skills, rules, modes, context, and when to use a prompt vs an agent. Part 2 goes deeper into how agents actually work in practice.</em></p>
+<section class="learn-section section-anchor" id="j-tools-how-agents-take-action-in-the-real-world">
+<h2 class="learn-section-title">J. Tools — How Agents Take Action in the Real World</h2>
+<p>A <strong>tool</strong> is anything an agent can use beyond plain text — read a file, run a command, search the web, post to Microsoft Teams, create a Jira ticket.</p>
+<p>Without tools, an agent is just a chatbot. With tools, it can <em>do things</em> in your systems.</p>
+<h3>Common tool types</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Tool type</th><th>What it does</th><th>Example</th></tr></thead><tbody><tr><td><strong>File system</strong></td><td>Read, write, search files on your computer</td><td>&quot;Find all <code>.md</code> dossiers that mention <code>Competitor X</code>&quot;</td></tr><tr><td><strong>Terminal / shell</strong></td><td>Run commands (git, npm, python scripts)</td><td>&quot;Run the test suite and tell me what failed&quot;</td></tr><tr><td><strong>Web search</strong></td><td>Look up current information</td><td>&quot;What did our competitor announce this week?&quot;</td></tr><tr><td><strong>APIs</strong></td><td>Talk to external services</td><td>Create a ticket, send an email, fetch analytics</td></tr><tr><td><strong>Browser</strong></td><td>Visit and interact with web pages</td><td>&quot;Check if the login page loads correctly&quot;</td></tr></tbody></table></div>
+<p><strong>Simple analogy:</strong> The LLM is the brain. Tools are the hands. The brain decides <em>what</em> to do; the tools <em>do</em> it.</p>
+<h3>Brain + hands architecture</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    You[Your task] --&gt; Brain[LLM — the brain\nplans and decides]
+    Brain --&gt;|calls| Hands[Tools — the hands]
+    Hands --&gt; FS[File system]
+    Hands --&gt; Shell[Terminal]
+    Hands --&gt; Web[Web search]
+    Hands --&gt; API[APIs]
+    Hands --&gt; Browser[Browser]
+    FS &amp; Shell &amp; Web &amp; API &amp; Browser --&gt;|results| Brain
+    Brain --&gt; You
+
+    style Brain fill:#e8f4fc,stroke:#333
+    style Hands fill:#fff3cd,stroke:#333</pre></div>
+<h3>How an agent uses tools (the loop)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+    participant You
+    participant Agent as Agent (LLM)
+    participant Tool
+
+    You-&gt;&gt;Agent: Give a task
+    Agent-&gt;&gt;Agent: Think: need workshop notes
+    Agent-&gt;&gt;Tool: read_file(&quot;notes.md&quot;)
+    Tool--&gt;&gt;Agent: File contents → added to context
+    Agent-&gt;&gt;Agent: Think: check Jira for duplicates
+    Agent-&gt;&gt;Tool: search_jira(&quot;competitor pricing&quot;)
+    Tool--&gt;&gt;Agent: Search results → added to context
+    Agent-&gt;&gt;You: Task complete</pre></div>
+<p>Each tool call adds its result to the <strong>context</strong> (see Part 1, Section G). The agent reads those results and decides the next step.</p>
+<p><strong>Note:</strong> Workshop notes, skills, and briefs are commonly stored as <code>.md</code> files because Markdown is plain text that both you and the agent can read reliably in VS Code or Cursor.</p>
+</section>
+<section class="learn-section section-anchor" id="k-mcp-connecting-agents-to-your-apps">
+<h2 class="learn-section-title">K. MCP — Connecting Agents to Your Apps</h2>
+<p><strong>MCP = Model Context Protocol.</strong> It is a standard way for AI agents to connect to external apps and services — Microsoft Teams, Jira, Google Drive, GitHub, and many others.</p>
+<p>Think of MCP as a <strong>universal adapter</strong>. Instead of every AI tool building custom integrations for every app, MCP gives them one shared plug format.</p>
+<h3>Without MCP vs With MCP</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Without MCP</th><th>With MCP</th></tr></thead><tbody><tr><td>Agent can only read local files</td><td>Agent can read Microsoft Teams messages, Jira tickets, Drive docs</td></tr><tr><td>You copy-paste data into the chat</td><td>Agent pulls data directly from the source</td></tr><tr><td>Each integration is custom and fragile</td><td>One protocol, many connectors</td></tr></tbody></table></div>
+<h3>What MCP servers give an agent</h3>
+<p>An <strong>MCP server</strong> is a connector for one service. When enabled, the agent gets new tools like:</p>
+<ul>
+<li><code>search_teams</code> — find messages in a channel</li>
+<li><code>create_jira_issue</code> — open a new ticket</li>
+<li><code>read_gdrive_file</code> — fetch a document from Google Drive</li>
+<li><code>list_github_prs</code> — see open pull requests</li>
+</ul>
+<p><strong>Example in Cursor:</strong> You say &quot;Summarize what the team flagged about Competitor X in #competitive-intel this week.&quot; The agent uses the Microsoft Teams MCP server to search the channel, reads the messages, and writes a summary — without you pasting anything.</p>
+<p><strong>Analogy:</strong> MCP is like giving your intern login access to Microsoft Teams, Jira, and Drive — but only the specific actions you&#x27;ve approved.</p>
+<h3>MCP architecture (universal adapter)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    Agent[AI Agent\nCursor, etc.] &lt;--&gt;|MCP protocol| MCP[MCP layer]
+    MCP &lt;--&gt; Teams[Microsoft Teams]
+    MCP &lt;--&gt; Jira[Jira]
+    MCP &lt;--&gt; Drive[Google Drive]
+    MCP &lt;--&gt; GH[GitHub]
+
+    style MCP fill:#e8f4fc,stroke:#333
+    style Agent fill:#d4edda,stroke:#333</pre></div>
+<p>One standard plug (MCP) on the agent side. Many connectors on the app side. Add a new service = add a new MCP server, not a whole new integration.</p>
+</section>
+<section class="learn-section section-anchor" id="l-models-picking-the-right-brain-for-the-job">
+<h2 class="learn-section-title">L. Models — Picking the Right Brain for the Job</h2>
+<p>Not all LLMs are the same. <strong>Models</strong> differ in speed, cost, reasoning ability, and context window size. Choosing the right one affects quality and how long tasks take.</p>
+<h3>The main trade-offs</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Model type</th><th>Strengths</th><th>Best for</th></tr></thead><tbody><tr><td><strong>Fast / lightweight</strong></td><td>Quick responses, lower cost</td><td>Simple edits, short drafts, quick questions</td></tr><tr><td><strong>Standard / balanced</strong></td><td>Good all-around quality</td><td>Most day-to-day agent work, coding, writing</td></tr><tr><td><strong>Reasoning / thinking</strong></td><td>Deep analysis, multi-step logic</td><td>Architecture decisions, complex bugs, planning</td></tr><tr><td><strong>Large context</strong></td><td>Holds more files and history in memory</td><td>Long reports, multi-source dossiers, large datasets</td></tr></tbody></table></div>
+<p><strong>Examples in Cursor:</strong> GitHub Copilot (fast), Claude Sonnet (balanced), Claude Opus or o3 (deeper reasoning, slower).</p>
+<h3>When to switch models</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Situation</th><th>Model choice</th></tr></thead><tbody><tr><td>&quot;Fix this typo&quot;</td><td>Fast model — don&#x27;t overthink it</td></tr><tr><td>&quot;Refactor this module across 10 files&quot;</td><td>Standard or large-context model</td></tr><tr><td>&quot;Why does our auth flow fail intermittently?&quot;</td><td>Reasoning model — needs careful analysis</td></tr><tr><td>&quot;Explore an unfamiliar dataset archive&quot;</td><td>Large-context model — needs to hold many files and tables</td></tr></tbody></table></div>
+<p><strong>Rule of thumb:</strong> Start with a balanced model. Switch to a reasoning model when the agent keeps getting stuck or makes logical errors. Switch to a fast model for repetitive, simple tasks.</p>
+<h3>Model selection flow</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    Start[New task] --&gt; Q1{Simple edit\nor quick question?}
+    Q1 --&gt;|Yes| Fast[Fast / lightweight model]
+    Q1 --&gt;|No| Q2{Needs deep reasoning\nor architecture?}
+    Q2 --&gt;|Yes| Reason[Reasoning / thinking model]
+    Q2 --&gt;|No| Q3{Many files or\nlong documents?}
+    Q3 --&gt;|Yes| Large[Large-context model]
+    Q3 --&gt;|No| Balanced[Standard / balanced model]
+
+    style Fast fill:#d4edda,stroke:#333
+    style Balanced fill:#cce5ff,stroke:#333
+    style Reason fill:#fff3cd,stroke:#333
+    style Large fill:#e2d5f5,stroke:#333</pre></div>
+</section>
+<section class="learn-section section-anchor" id="m-human-in-the-loop-when-to-approve-when-to-auto-run">
+<h2 class="learn-section-title">M. Human-in-the-Loop — When to Approve, When to Auto-Run</h2>
+<p><strong>Human-in-the-loop</strong> means you stay involved at key decision points instead of letting the agent run completely unsupervised.</p>
+<p>Not every action needs your approval. The goal is to approve the <em>risky</em> steps and automate the <em>safe</em> ones.</p>
+<h3>Autonomy levels</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Level</th><th>What happens</th><th>Example</th></tr></thead><tbody><tr><td><strong>Full supervision</strong></td><td>Agent proposes every step; you approve before it runs</td><td>&quot;Here&#x27;s the SQL I&#x27;ll run — OK to proceed?&quot;</td></tr><tr><td><strong>Checkpoint approval</strong></td><td>Agent runs safe steps freely; pauses before irreversible actions</td><td>Reads files freely, asks before pushing to git</td></tr><tr><td><strong>Autonomous</strong></td><td>Agent completes the whole task; you review the result</td><td>&quot;Summarize this doc&quot; — nothing to break</td></tr><tr><td><strong>Scheduled / background</strong></td><td>Agent runs on a timer with no you in the room</td><td>Weekly report every Monday at 9am</td></tr></tbody></table></div>
+<h3>What usually needs approval</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Safe to auto-run</th><th>Needs approval</th></tr></thead><tbody><tr><td>Read files, search, analyze</td><td>Delete files, drop database tables</td></tr><tr><td>Draft text (email, brief, report)</td><td>Send email, post to Microsoft Teams, publish</td></tr><tr><td>Run tests locally</td><td>Push code, merge PRs, deploy</td></tr><tr><td>Create draft tickets</td><td>Create tickets assigned to others without review</td></tr></tbody></table></div>
+<p>This is exactly what <strong>Rules</strong> are for (Part 1, Section E): &quot;Never post to Microsoft Teams without explicit permission&quot; is a human-in-the-loop guardrail baked into the agent.</p>
+<p><strong>Practical rule:</strong> Auto-run read and draft steps. Require approval for anything that leaves your machine or affects other people.</p>
+<h3>Autonomy spectrum</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    L1[&quot;Full supervision\nevery step approved&quot;] --&gt; L2[&quot;Checkpoint approval\npause before risky actions&quot;]
+    L2 --&gt; L3[&quot;Autonomous\nreview output after&quot;]
+    L3 --&gt; L4[&quot;Scheduled / background\nruns without you&quot;]
+
+    style L1 fill:#f8d7da,stroke:#333
+    style L2 fill:#fff3cd,stroke:#333
+    style L3 fill:#cce5ff,stroke:#333
+    style L4 fill:#d4edda,stroke:#333</pre></div>
+<p>Move right only as trust grows. Most production agents should live at Level 2 until evaluation passes (Section R).</p>
+</section>
+<section class="learn-section section-anchor" id="n-building-your-first-skill">
+<h2 class="learn-section-title">N. Building Your First Skill</h2>
+<p>A <strong>skill</strong> is a markdown file that teaches the agent how to do one specific job, step by step. You write it once; the agent follows it every time that task comes up.</p>
+<h3>Why Markdown (.md) files?</h3>
+<p><strong>Markdown</strong> is a plain-text document format. You write headings with <code>#</code>, bullets with <code>-</code>, and bold with <code><strong>text</strong></code>. The file extension is <code>.md</code>.</p>
+<p>Agent tools like Cursor and editors like <strong>VS Code</strong> standardize on Markdown for skills, rules, and project docs — not Word, not PDF.</p>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Reason</th><th>Why it matters</th></tr></thead><tbody><tr><td><strong>LLMs understand plain text</strong></td><td>No special export step; the agent reads the file directly</td></tr><tr><td><strong>Structure maps to steps</strong></td><td><code># Steps</code> and numbered lists match how skills and checklists work</td></tr><tr><td><strong>Native in VS Code / Cursor</strong></td><td>Syntax highlighting, search, and a <strong>Markdown Preview</strong> side panel</td></tr><tr><td><strong>Git-friendly</strong></td><td>Diff two versions of a skill, review changes in a PR, roll back mistakes</td></tr><tr><td><strong>Same format everywhere</strong></td><td>Skills (<code>SKILL.md</code>), notes (<code>workshop-notes.md</code>), project context (<code>README.md</code>, <code>AGENTS.md</code>)</td></tr></tbody></table></div>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    You[You edit .md file\nin VS Code / Cursor] --&gt; File[Plain text\non disk]
+    File --&gt; Agent[Agent reads file\ninto context]
+    File --&gt; Preview[Preview pane\nfor humans]
+
+    style File fill:#fff3cd,stroke:#333
+    style Agent fill:#e8f4fc,stroke:#333</pre></div>
+<p><strong>Simple analogy:</strong> Markdown is a shared notebook format — you read it normally, the editor can prettify it, and the AI doesn&#x27;t need a translator.</p>
+<p><strong>In VS Code / Cursor:</strong> Open any <code>.md</code> file → open <strong>Preview</strong> (<code>Cmd+Shift+V</code> on Mac, <code>Ctrl+Shift+V</code> on Windows) to see headings and lists rendered cleanly while the agent still sees the raw text.</p>
+<h3>Anatomy of a skill</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Section</th><th>Purpose</th><th>Example</th></tr></thead><tbody><tr><td><strong>Trigger</strong></td><td>When should the agent use this skill?</td><td>&quot;Use when the user asks for a competitive pulse brief&quot;</td></tr><tr><td><strong>Steps</strong></td><td>Ordered checklist the agent follows</td><td>1. Pull competitor name → 2. Find key market move → 3. Write 3 summary angles</td></tr><tr><td><strong>Output format</strong></td><td>What the finished work looks like</td><td>&quot;One-page brief with executive summary and source links&quot;</td></tr><tr><td><strong>Tools needed</strong></td><td>Which MCP servers or files to use</td><td>&quot;Read from <code>competitor-dossier.md</code> in the project root&quot;</td></tr></tbody></table></div>
+<h3>Skill anatomy (pipeline)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    Trigger[Trigger\nwhen to use] --&gt; Steps[Steps\nordered checklist]
+    Steps --&gt; Output[Output format\nwhat done looks like]
+    Output --&gt; Tools[Tools needed\nMCP, files]
+
+    style Trigger fill:#fff3cd,stroke:#333
+    style Steps fill:#cce5ff,stroke:#333
+    style Output fill:#d4edda,stroke:#333</pre></div>
+<h3>Example skill (simplified)</h3>
+<pre class="learn-code"># Write a Competitive Pulse Brief
+
+Use when the user asks for a brief on a competitor&#x27;s recent market move.
+
+## Steps
+1. Ask for the competitor name and time window if not provided.
+2. Pull key signals: pricing changes, partnerships, filings, or news.
+3. Write 3 brief angles: threat-led, opportunity-led, and watch-list-led.
+4. Recommend the clearest angle for executives and explain why.
+
+## Rules
+- Always cite source URLs or document names.
+- Never state unverified claims as fact.</pre>
+<h3>Where skills live</h3>
+<p>In Cursor, skills are stored as <code>SKILL.md</code> files in your skills folder. The agent reads the description and loads the full skill when your task matches.</p>
+<p>You don&#x27;t need to learn all of Markdown on day one — headings, numbered lists, and bullet points cover most skills. VS Code and Cursor autocomplete <code>#</code> headings and list syntax as you type.</p>
+<p><strong>Analogy:</strong> Writing a skill is like onboarding a new hire for one recurring job. You explain it once; they do it the same way every time.</p>
+</section>
+<section class="learn-section section-anchor" id="o-when-things-go-wrong-common-agent-failures">
+<h2 class="learn-section-title">O. When Things Go Wrong — Common Agent Failures</h2>
+<p>Agents are powerful but not perfect. Knowing the common failure modes helps you fix problems faster instead of blaming the AI.</p>
+<h3>The big five</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Failure</th><th>What it looks like</th><th>What to do</th></tr></thead><tbody><tr><td><strong>Hallucination</strong></td><td>Agent states facts, file paths, or API responses that don&#x27;t exist</td><td>Ask it to show its source. Use &quot;read the file and quote the exact line.&quot;</td></tr><tr><td><strong>Context overflow</strong></td><td>Agent &quot;forgets&quot; earlier instructions or files mid-task</td><td>Shorten the task. @-mention only the files needed. Start a fresh chat.</td></tr><tr><td><strong>Wrong tool choice</strong></td><td>Agent searches the web when it should read a local file (or vice versa)</td><td>Be explicit: &quot;Read <code>config.yaml</code> in this repo — do not search online.&quot;</td></tr><tr><td><strong>Partial completion</strong></td><td>Agent does 3 of 5 steps and says &quot;done&quot;</td><td>Give a checklist in your prompt: &quot;Complete all 5 steps before responding.&quot;</td></tr><tr><td><strong>Over-eager edits</strong></td><td>Agent refactors code you didn&#x27;t ask it to touch</td><td>Use Ask or Plan mode first. Add a Rule: &quot;Only edit files directly related to the task.&quot;</td></tr></tbody></table></div>
+<h3>Debugging checklist</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    Bad[Agent gave a bad result] --&gt; C1{Right files\nin context?}
+    C1 --&gt;|No| Fix1[&quot;@-mention missing files&quot;]
+    C1 --&gt;|Yes| C2{Prompt specific\nenough?}
+    C2 --&gt;|No| Fix2[&quot;Add role, task,\ncontext, format&quot;]
+    C2 --&gt;|Yes| C3{Right tools\nused?}
+    C3 --&gt;|No| Fix3[&quot;Name tool or\ndata source explicitly&quot;]
+    C3 --&gt;|Yes| C4{Context\nfull?}
+    C4 --&gt;|Yes| Fix4[&quot;Fresh chat,\nfewer files&quot;]
+    C4 --&gt;|No| C5{Task too\nbig?}
+    C5 --&gt;|Yes| Fix5[&quot;Break into steps\nor use Plan mode&quot;]
+    C5 --&gt;|No| Fix6[&quot;Rewrite prompt\nbefore switching models&quot;]
+
+    style Bad fill:#f8d7da,stroke:#333</pre></div>
+<p><strong>Rule of thumb:</strong> When an agent fails, assume the <em>instructions</em> failed first — not the model. Rewrite the prompt before switching models.</p>
+</section>
+<section class="learn-section section-anchor" id="p-memory-across-sessions-what-persists-vs-what-doesnt">
+<h2 class="learn-section-title">P. Memory Across Sessions — What Persists vs What Doesn&#x27;t</h2>
+<p>Part 1 explained <strong>context</strong> within a single conversation. But what does the agent remember <em>next time</em> you open a new chat?</p>
+<h3>What persists (across sessions)</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Persists</th><th>Where it lives</th><th>Example</th></tr></thead><tbody><tr><td><strong>Rules</strong></td><td>Project or user settings</td><td>&quot;Always commit with a descriptive message&quot;</td></tr><tr><td><strong>Instructions</strong></td><td>Agent / user configuration</td><td>&quot;Respond in plain English&quot;</td></tr><tr><td><strong>Skills</strong></td><td>Skills folder</td><td>&quot;How to write a competitive pulse brief&quot; playbook</td></tr><tr><td><strong>Project files</strong></td><td>Your repo / Drive</td><td>Code, docs, configs the agent can read anytime</td></tr></tbody></table></div>
+<h3>What does NOT persist</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Does not persist</th><th>Why it matters</th></tr></thead><tbody><tr><td>Previous chat history</td><td>Each new conversation starts blank</td></tr><tr><td>Tool call results from last session</td><td>Agent won&#x27;t remember &quot;I already searched Jira yesterday&quot;</td></tr><tr><td>Decisions you made in an old thread</td><td>You must restate preferences unless they&#x27;re in a Rule</td></tr></tbody></table></div>
+<h3>How to give an agent &quot;long-term memory&quot;</h3>
+<p>Since LLMs don&#x27;t remember past chats, you simulate memory by <strong>writing things down</strong>:</p>
+<ol>
+<li><strong>Rules</strong> — for behavior that should always apply</li>
+<li><strong>Skills</strong> — for workflows you repeat</li>
+<li><strong>Project docs</strong> — <code>README.md</code>, <code>AGENTS.md</code>, and other <code>.md</code> notes the agent can read (Markdown keeps them editable in VS Code/Cursor and diffable in Git)</li>
+<li><strong>@-mentions</strong> — pull specific files into context on demand</li>
+</ol>
+<p><strong>Example:</strong> Instead of hoping the agent remembers your coding style from last week, add a Rule: &quot;Use 2-space indentation and prefer functional components in React.&quot;</p>
+<p><strong>Analogy:</strong> The agent wakes up with amnesia every session. Rules and skills are the sticky notes on its desk.</p>
+<h3>Memory: one session vs next session</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    subgraph persists [Persists across sessions]
+        Rules[Rules]
+        Instructions[Instructions]
+        Skills[Skills]
+        Files[Project files]
+    end
+
+    subgraph gone [Gone when chat closes]
+        History[Chat history]
+        ToolResults[Past tool results]
+        Decisions[Thread decisions]
+    end
+
+    persists --&gt;|loaded next time| NewChat[New conversation]
+    gone -.-&gt;|lost| X[✗]
+
+    style persists fill:#d4edda,stroke:#333
+    style gone fill:#f8d7da,stroke:#333</pre></div>
+</section>
+<section class="learn-section section-anchor" id="q-security-privacy-basics">
+<h2 class="learn-section-title">Q. Security &amp; Privacy Basics</h2>
+<p>When an agent reads your files, runs commands, or calls APIs, data leaves your machine and goes to an AI provider (OpenAI, Anthropic, Google, etc.). Understanding what flows where keeps you safe.</p>
+<h3>What typically gets sent to the AI provider</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Sent to the model</th><th>Usually stays local</th></tr></thead><tbody><tr><td>Text in your prompt and conversation</td><td>Files the agent never reads</td></tr><tr><td>Contents of files the agent opens</td><td>Data on systems without MCP access</td></tr><tr><td>Output of tool calls (search results, API responses)</td><td>Your API keys (stored in local config, not in prompts)</td></tr></tbody></table></div>
+<h3>Safe practices</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Do</th><th>Don&#x27;t</th></tr></thead><tbody><tr><td>Use <code>.env</code> files for secrets; add them to <code>.gitignore</code></td><td>Paste API keys or passwords into chat</td></tr><tr><td>Review agent actions before irreversible steps</td><td>Let agents auto-post to public channels unchecked</td></tr><tr><td>Use Rules to block dangerous commands</td><td>Give agents access to production databases without guardrails</td></tr><tr><td>Check your company&#x27;s AI usage policy</td><td>Put customer PII or regulated data in prompts without approval</td></tr></tbody></table></div>
+<h3>MCP and permissions</h3>
+<p>Each MCP server only exposes the actions you&#x27;ve connected and authorized. The agent can&#x27;t read Microsoft Teams unless you&#x27;ve set up the Microsoft Teams MCP server and logged in.</p>
+<p><strong>Rule of thumb:</strong> Treat the agent like a contractor with laptop access. Give it what it needs for the job — not the keys to everything.</p>
+<h3>Data flow: what leaves your machine</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    subgraph local [Stays local]
+        Unread[Files agent\nnever opens]
+        Keys[API keys in\nlocal config]
+        NoMCP[Systems without\nMCP access]
+    end
+
+    subgraph cloud [Sent to AI provider]
+        Prompt[Your prompt\nand chat]
+        Opened[File contents\nagent reads]
+        Tools[Tool call\nresults]
+    end
+
+    You[You] --&gt; Agent[Agent]
+    Agent --&gt; cloud
+
+    style cloud fill:#fff3cd,stroke:#333
+    style local fill:#d4edda,stroke:#333</pre></div>
+</section>
+<section class="learn-section section-anchor" id="r-evaluating-an-agent-is-it-actually-working">
+<h2 class="learn-section-title">R. Evaluating an Agent — Is It Actually Working?</h2>
+<p>Once you&#x27;ve built a skill or set up a workflow, you need to know if it&#x27;s reliable — especially before you trust it to run weekly or unattended.</p>
+<h3>What &quot;good&quot; looks like</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Signal</th><th>Good</th><th>Bad</th></tr></thead><tbody><tr><td><strong>Consistency</strong></td><td>Same input → same quality output every time</td><td>Results vary wildly run to run</td></tr><tr><td><strong>Completeness</strong></td><td>All steps in the skill are executed</td><td>Skips steps silently</td></tr><tr><td><strong>Accuracy</strong></td><td>Facts match source data</td><td>Invents ticket numbers, file paths, or quotes</td></tr><tr><td><strong>Safety</strong></td><td>Pauses before irreversible actions</td><td>Posts, deletes, or deploys without asking</td></tr></tbody></table></div>
+<h3>A simple evaluation method</h3>
+<ol>
+<li><strong>Pick 3 real examples</strong> — past tasks you&#x27;d actually give the agent</li>
+<li><strong>Run the agent on each</strong> — without helping mid-way</li>
+<li><strong>Score each run</strong> — complete? accurate? safe?</li>
+<li><strong>Fix the skill or rules</strong> — not just the prompt — based on what failed</li>
+<li><strong>Re-run</strong> until 3/3 pass</li>
+</ol>
+<p><strong>Example:</strong> Your &quot;workshop notes → Jira tickets&quot; skill fails because it assigns the wrong person. Fix: add a step in the skill — &quot;Look up assignee email in the team roster before creating the ticket.&quot;</p>
+<p><strong>Analogy:</strong> Evaluating an agent is like a job interview with a work sample. One good answer isn&#x27;t enough — you need repeatable performance.</p>
+<h3>Evaluation loop</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    E1[Pick 3 real\nexamples] --&gt; E2[Run agent\nwithout helping]
+    E2 --&gt; E3[Score:\ncomplete? accurate? safe?]
+    E3 --&gt; Pass{3/3 pass?}
+    Pass --&gt;|No| E4[Fix skill\nor rules]
+    E4 --&gt; E2
+    Pass --&gt;|Yes| Ship[Ready to trust\nor automate]
+
+    style Ship fill:#d4edda,stroke:#333</pre></div>
+</section>
+<section class="learn-section section-anchor" id="s-from-one-agent-to-a-workflow-chaining-steps-together">
+<h2 class="learn-section-title">S. From One Agent to a Workflow — Chaining Steps Together</h2>
+<p>Real work rarely fits in a single agent call. A <strong>workflow</strong> is a sequence of tasks — sometimes handled by one agent with a detailed skill, sometimes by multiple specialized agents.</p>
+<h3>Single agent vs multi-step workflow</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Approach</th><th>When to use</th><th>Example</th></tr></thead><tbody><tr><td><strong>One agent, one skill</strong></td><td>Steps are linear and related</td><td>Workshop notes → Jira tickets</td></tr><tr><td><strong>One agent, multiple skills</strong></td><td>Task spans domains but one &quot;owner&quot;</td><td>Research competitor → write brief → draft executive summary</td></tr><tr><td><strong>Multiple agents</strong></td><td>Steps are independent or parallel</td><td>Agent A pulls market data; Agent B writes the intel report</td></tr></tbody></table></div>
+<h3>Example workflow: weekly intelligence &amp; metrics digest</h3>
+<p class="learn-intro"><em>Combines Competitive Intelligence Analyst + Data Analyst work.</em></p>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    S1[&quot;① #competitive-intel channel\n(Microsoft Teams MCP)&quot;] --&gt; S2[&quot;② Warehouse / BI export\n(SQL / Looker)&quot;]
+    S2 --&gt; S3[&quot;③ Cluster themes\n+ write summary&quot;]
+    S3 --&gt; S4[&quot;④ Save to Drive\n(Drive MCP)&quot;]
+    S4 --&gt; S5[&quot;⑤ You review\n→ share with leadership&quot;]
+
+    style S5 fill:#fff3cd,stroke:#333</pre></div>
+<p>Each step can be one skill. The overall workflow is documented in a master skill or a checklist you run weekly.</p>
+<p><strong>Practical rule:</strong> If a workflow has more than 5 steps or 3 different tools, write it down as a skill — don&#x27;t rely on remembering the sequence each time.</p>
+</section>
+<section class="learn-section section-anchor" id="putting-it-all-together-part-2">
+<h2 class="learn-section-title">Putting It All Together (Part 2)</h2>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Concept</th><th>One-line summary</th></tr></thead><tbody><tr><td>Tools</td><td>How agents read files, run commands, and call APIs</td></tr><tr><td>MCP</td><td>Standard protocol connecting agents to Microsoft Teams, Jira, Drive, etc.</td></tr><tr><td>Models</td><td>Different AI brains for speed vs depth vs large context</td></tr><tr><td>Human-in-the-loop</td><td>You approve risky steps; agent auto-runs safe ones</td></tr><tr><td>Building a skill</td><td>Write a step-by-step playbook the agent reuses</td></tr><tr><td>Failures</td><td>Hallucination, context overflow, wrong tools — fix with better prompts and rules</td></tr><tr><td>Memory</td><td>Rules and skills persist; chat history does not</td></tr><tr><td>Security</td><td>Secrets stay out of chat; review before irreversible actions</td></tr><tr><td>Evaluation</td><td>Test on 3 real examples before trusting a workflow</td></tr><tr><td>Workflows</td><td>Chain skills and tools for repeated multi-step jobs</td></tr></tbody></table></div>
+<p><strong>Continue to Part 3:</strong> <a href="part3.html">AI_Agents_Primer_Part3.md</a> — subagents, hooks &amp; automations, RAG, cost &amp; tokens, team rollout, and the production agent checklist.</p>
+</section>
+  </article>
+
+  <nav class="learn-part-nav" aria-label="Part navigation">
+    <a href="part1.html">← Part 1 — Foundations</a>
+    <a href="../learn.html" class="learn-index-link">Course index</a>
+    <a href="part3.html">Part 3 — Scale →</a>
+  </nav>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <p>AgentAtlas &nbsp;&middot;&nbsp; Navigate the world of AI agents &nbsp;&middot;&nbsp; Built with <span class="heart">&#10084;&#65039;</span> for the world</p>
+  </div>
+  <div class="footer-right">
+    <a href="https://www.linkedin.com/in/sinha-vivek/" target="_blank" title="LinkedIn" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.855v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://github.com/viveksinha" target="_blank" title="GitHub" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+    <a href="https://x.com/geekwhotravels" target="_blank" title="X / Twitter" aria-label="X / Twitter">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+    </a>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+  function mermaidTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    if (t === 'dark') return 'dark';
+    if (t === 'light') return 'neutral';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'neutral';
+  }
+
+  async function renderMermaid() {
+    mermaid.initialize({ startOnLoad: false, theme: mermaidTheme(), securityLevel: 'loose' });
+    await mermaid.run({ querySelector: '.mermaid' });
+  }
+
+  renderMermaid();
+  document.getElementById('themeToggle')?.addEventListener('click', () => setTimeout(renderMermaid, 350));
+</script>
+</body>
+</html>

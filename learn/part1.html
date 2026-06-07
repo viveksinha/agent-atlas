@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Part 1 — Foundations — Learn — AgentAtlas</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/learn.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      AgentAtlas
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../learn.html">Learn</a></li>
+      <li><a href="../resources.html">Resources</a></li>
+      <li><a href="../tools.html">Tools</a></li>
+      <li><a href="../examples.html">Examples</a></li>
+      <li><a href="../deep-tech.html">Deep Tech</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="learn-hero">
+  <div class="breadcrumb" style="margin-bottom:14px; font-size:0.8rem;"><a href="../index.html">Home</a> › <a href="../learn.html">Learn</a> › Part 1 — Foundations</div>
+  <h1>Part 1 — Foundations</h1>
+  <p>Sections A–I · LLMs, agents, prompts, skills, modes, and context</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Beginner</span>
+    <span class="hero-tag">Cursor &amp; VS Code</span>
+    <span class="hero-tag">25 Sections</span>
+  </div>
+</div>
+
+<div class="learn-progress">Part 1 of 3 · Foundations</div>
+
+<nav class="learn-quick-nav" aria-label="Section navigation">
+  <div class="learn-quick-nav-inner">
+      <a href="#a-what-is-an-llm">A. LLM</a>
+      <a href="#b-what-is-github-copilot">B. Copilot</a>
+      <a href="#c-what-is-agentic-ai-what-is-an-agent">C. Agents</a>
+      <a href="#d-how-to-write-a-good-prompt">D. Prompts</a>
+      <a href="#e-skills-rules-and-instructions">E. Skills</a>
+      <a href="#f-modes-plan-ask-agent">F. Modes</a>
+      <a href="#g-what-is-context">G. Context</a>
+      <a href="#h-how-agents-use-skills-rules-and-instructions">H. Skills in use</a>
+      <a href="#i-prompt-vs-agent-which-one-to-use">I. Prompt vs agent</a>
+  </div>
+</nav>
+
+<div class="container learn-container">
+  <article class="learn-prose">
+<p><strong>Course index:</strong> <a href="../learn.html">AI_Agents_Primer_INDEX.md</a> — all topics across Parts 1–3. <strong><a href="../learn.html">README</a></strong> for course overview.</p>
+<p><strong>Example personas</strong> used throughout: <strong>Competitive Intelligence Analyst</strong>, <strong>Business Analyst</strong>, <strong>Data Analyst</strong> (abbreviated CI Analyst, BA, DA where noted).</p>
+<section class="learn-section section-anchor" id="a-what-is-an-llm">
+<h2 class="learn-section-title">A. What is an LLM?</h2>
+<p><strong>LLM = Large Language Model.</strong> It is an AI trained on massive amounts of text (books, websites, code) to understand and generate human language.</p>
+<p>Think of it as an extremely well-read assistant who can write, explain, summarize, and answer questions — but has no memory of past conversations unless you give it context.</p>
+<p><strong>Examples:</strong> ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google).</p>
+<p><strong>Simple analogy:</strong> Autocomplete on your phone, but 1000x smarter. It predicts the most useful next word, sentence, or paragraph based on what you typed.</p>
+<h3>How an LLM works (pipeline)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    A[&quot;Training data\n(books, websites, code)&quot;] --&gt; B[LLM]
+    C[Your prompt] --&gt; B
+    B --&gt; D[Generated response]
+
+    style B fill:#e8f4fc,stroke:#333</pre></div>
+<p>Each arrow is one step: the model was trained on text, you send a prompt, it predicts the best continuation word by word until the answer is complete.</p>
+</section>
+<section class="learn-section section-anchor" id="b-what-is-github-copilot">
+<h2 class="learn-section-title">B. What is GitHub Copilot?</h2>
+<p><strong>GitHub Copilot</strong> is an AI coding assistant built into your code editor. It reads what you&#x27;re typing and suggests the next line, function, or even entire blocks of code.</p>
+<p>It is powered by an LLM trained specifically on public code from GitHub. Other such tools are <strong>Cursor</strong> or <strong>Claude Code.</strong></p>
+<p><strong>Where does it live?</strong></p>
+<ul>
+<li><strong>VS Code</strong> — the most popular free code editor by Microsoft. Copilot shows up as a side panel or inline suggestion as you type.</li>
+<li><strong>GitHub.com</strong> — the website where developers store and share code. Copilot can answer questions about a repo directly on the site.</li>
+</ul>
+<p><strong>Example:</strong> You type <code># function to sort a list of names alphabetically</code> and Copilot writes the full code for you.</p>
+<h3>Where Copilot sits in the stack</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    You[You type in editor] --&gt; Editor[VS Code / Cursor]
+    Editor --&gt;|sends context| LLM[Code-trained LLM]
+    LLM --&gt;|returns suggestion| Editor
+    Editor --&gt; You
+
+    style LLM fill:#e8f4fc,stroke:#333</pre></div>
+<p>You stay in the editor. The LLM never runs on your machine — it reads your code snippet and sends back a suggestion you accept or ignore.</p>
+<h3>Why you&#x27;ll see <code>.md</code> (Markdown) files</h3>
+<p>In VS Code, Cursor, and most agent setups, instructions and documents are saved as <strong>Markdown</strong> files — plain text with simple formatting (headings, bullets, bold). The extension is <code>.md</code>.</p>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Why Markdown?</th><th>What it means for you</th></tr></thead><tbody><tr><td><strong>LLMs read it easily</strong></td><td>Plain text — no converting Word docs or PDFs</td></tr><tr><td><strong>Structured</strong></td><td>Headings and numbered steps help the agent follow a skill</td></tr><tr><td><strong>Built into VS Code / Cursor</strong></td><td>Open the file, use <strong>Preview</strong> (or <code>Cmd+Shift+V</code> / <code>Ctrl+Shift+V</code>) to see formatted output</td></tr><tr><td><strong>Easy to share and version</strong></td><td>Store skills and notes in Git; see exactly what changed</td></tr></tbody></table></div>
+<p>You&#x27;ll use Markdown for skills, project notes, and README-style docs. Part 2, Section N goes deeper when you build your first skill.</p>
+</section>
+<section class="learn-section section-anchor" id="c-what-is-agentic-ai-what-is-an-agent">
+<h2 class="learn-section-title">C. What is Agentic AI? What is an Agent?</h2>
+<p>An <strong>agent</strong> is an AI that doesn&#x27;t just answer questions — it <em>takes actions</em> to complete a goal.</p>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th></th><th>Chatbot</th><th>Agent</th></tr></thead><tbody><tr><td>You ask</td><td>&quot;How do I send an email?&quot;</td><td>&quot;Send an email to my team with the meeting summary&quot;</td></tr><tr><td>It does</td><td>Explains the steps</td><td>Actually sends the email</td></tr></tbody></table></div>
+<p>An agent can:</p>
+<ul>
+<li>Use tools (search the web, read files, call APIs)</li>
+<li>Make a plan (break a big task into steps)</li>
+<li>Execute the steps one by one</li>
+<li>Loop back and fix mistakes</li>
+</ul>
+<p><strong>Agentic AI</strong> is the broader idea of AI systems that act autonomously — not just respond.</p>
+<p><strong>Example in Cursor:</strong> You say &quot;Find all bugs in my code and fix them.&quot; The agent reads your files, identifies issues, edits the code, and tells you what it changed.</p>
+<h3>Chatbot vs agent (flow)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    subgraph chatbot [Chatbot]
+        Q1[You ask a question] --&gt; A1[AI explains the steps]
+    end
+
+    subgraph agent [Agent]
+        Q2[You give a goal] --&gt; P[Plan steps]
+        P --&gt; T[Use tools]
+        T --&gt; O[Observe results]
+        O --&gt; D{Done?}
+        D --&gt;|No| P
+        D --&gt;|Yes| R[Delivers outcome]
+    end</pre></div>
+<p>The chatbot stops at advice. The agent loops — plan, act, check — until the job is actually done.</p>
+</section>
+<section class="learn-section section-anchor" id="d-how-to-write-a-good-prompt">
+<h2 class="learn-section-title">D. How to Write a Good Prompt</h2>
+<p>A <strong>prompt</strong> is the instruction you give to an AI. Better prompts → better results.</p>
+<h3>The 4-part formula</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Part</th><th>What it does</th><th>Example</th></tr></thead><tbody><tr><td><strong>Role</strong></td><td>Tell the AI who to be</td><td>&quot;You are a competitive intelligence analyst at a consulting firm…&quot;</td></tr><tr><td><strong>Task</strong></td><td>State exactly what you want</td><td>&quot;…write a one-page competitor landscape brief…&quot;</td></tr><tr><td><strong>Context</strong></td><td>Give relevant background</td><td>&quot;…covering three direct rivals in the enterprise payments API market…&quot;</td></tr><tr><td><strong>Format</strong></td><td>Specify the output structure</td><td>&quot;…in bullet points with a summary at the top.&quot;</td></tr></tbody></table></div>
+<h3>The 4-part formula (pipeline)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    R[&quot;① Role\nwho to be&quot;] --&gt; T[&quot;② Task\nwhat to do&quot;]
+    T --&gt; C[&quot;③ Context\nbackground&quot;]
+    C --&gt; F[&quot;④ Format\noutput shape&quot;]
+    F --&gt; Out[Better AI output]
+
+    style Out fill:#d4edda,stroke:#333</pre></div>
+<p>Think of it as a pipe: each part feeds the next. Skip Role and the tone may be wrong. Skip Context and the answer will be generic. Skip Format and you&#x27;ll get a wall of text.</p>
+<h3>Good vs Bad</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Bad prompt</th><th>Good prompt</th></tr></thead><tbody><tr><td>&quot;Write something about payments&quot;</td><td>&quot;Write a 3-sentence explanation of how Stripe handles failed payments, for a non-technical audience.&quot;</td></tr><tr><td>&quot;Summarize the competitor&quot;</td><td>&quot;As a business analyst, summarize Acme Corp&#x27;s Q3 earnings call in 5 bullets — focus on pricing and partnerships.&quot;</td></tr><tr><td>&quot;Fix my data&quot;</td><td>&quot;This SQL query returns duplicate rows on the <code>region</code> join. Find the bug and explain why it happens.&quot;</td></tr></tbody></table></div>
+<p><strong>Rule of thumb:</strong> If you wouldn&#x27;t give this instruction to a new intern and expect the right result, rewrite it.</p>
+</section>
+<section class="learn-section section-anchor" id="e-skills-rules-and-instructions">
+<h2 class="learn-section-title">E. Skills, Rules, and Instructions</h2>
+<p>These are the three ways you <em>customize</em> how an AI agent behaves.</p>
+<h3>Instructions</h3>
+<p>Instructions <strong>guide the behavior of the agent</strong>. Set once, always active.</p>
+<blockquote class="callout callout-tip"><p>
+Example: &quot;Always respond in plain English. Never use jargon. When unsure, ask a clarifying question.&quot; 
+</p></blockquote>
+<h3>Rules</h3>
+<p><strong>Guardrails</strong> — things the agent must always do or never do.</p>
+<blockquote class="callout callout-tip"><p>
+Example: &quot;Never post to Microsoft Teams without the user explicitly asking.&quot; or &quot;Always check for duplicate Jira tickets before creating a new one.&quot; 
+</p></blockquote>
+<h3>Skills</h3>
+<p>Reusable playbooks for specific tasks. A skill is a <strong>Markdown file</strong> (<code>.md</code>) that tells the agent **<em>how</em> to do something** step by step — like a standard operating procedure (SOP).</p>
+<blockquote class="callout callout-tip"><p>
+Example: A &quot;competitive pulse brief&quot; skill tells the agent: pull the competitor name → find the key market move → write 3 summary angles → pick the clearest one for executives. 
+</p></blockquote>
+<p><strong>Analogy:</strong> Instructions = employee handbook. Rules = company policies. Skills = job-specific training manuals.</p>
+<h3>How the three layers stack</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    subgraph always_on [Always loaded]
+        I[Instructions\nbaseline personality]
+        R[Rules\nhard guardrails]
+    end
+
+    subgraph on_demand [Loaded when task matches]
+        S[Skills\nstep-by-step playbooks]
+    end
+
+    I --&gt; Agent[Agent behavior]
+    R --&gt; Agent
+    S --&gt; Agent
+
+    style Agent fill:#e8f4fc,stroke:#333</pre></div>
+<p>Instructions and rules apply to every task. Skills kick in only when the job matches — like pulling the right manual off the shelf.</p>
+</section>
+<section class="learn-section section-anchor" id="f-modes-plan-ask-agent">
+<h2 class="learn-section-title">F. Modes: Plan, Ask, Agent</h2>
+<p>In tools like Cursor, the AI operates in different <strong>modes</strong> depending on what you need.</p>
+<h3>Ask Mode (Read-only)</h3>
+<p>The AI reads your files and answers questions. It cannot make any changes.</p>
+<blockquote class="callout callout-tip"><p>
+Use when: &quot;What columns are in the competitor pricing dataset?&quot; / &quot;Where is the market share logic documented?&quot; 
+</p></blockquote>
+<h3>Plan Mode (Think first)</h3>
+<p>The AI explores the problem, proposes an approach, and waits for your approval before doing anything.</p>
+<blockquote class="callout callout-tip"><p>
+Use when: &quot;How should I structure a competitive landscape dashboard?&quot; — you want options and trade-offs before committing. 
+</p></blockquote>
+<h3>Agent Mode (Act)</h3>
+<p>The AI takes full action — reads files, writes code, runs commands, calls APIs.</p>
+<blockquote class="callout callout-tip"><p>
+Use when: &quot;Pull last week&#x27;s sales CSVs and build a variance summary by region.&quot; The agent will find the data files, run the analysis, and save the output. 
+</p></blockquote>
+<p><strong>Quick rule:</strong> Ask = learn. Plan = decide. Agent = do.</p>
+<h3>Which mode to pick</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    Start[What do you need?] --&gt; Q1{Just understand\nor explore?}
+    Q1 --&gt;|Yes| Ask[&quot;Ask Mode\n(read-only)&quot;]
+    Q1 --&gt;|No| Q2{Want options and\ntrade-offs first?}
+    Q2 --&gt;|Yes| Plan[&quot;Plan Mode\n(think first)&quot;]
+    Q2 --&gt;|No| Agent[&quot;Agent Mode\n(act)&quot;]
+
+    style Ask fill:#fff3cd,stroke:#333
+    style Plan fill:#cce5ff,stroke:#333
+    style Agent fill:#d4edda,stroke:#333</pre></div>
+</section>
+<section class="learn-section section-anchor" id="g-what-is-context">
+<h2 class="learn-section-title">G. What is Context?</h2>
+<p><strong>Context</strong> is everything the AI knows about the current situation when it generates a response.</p>
+<p>LLMs have no persistent memory. Each conversation starts fresh. Whatever you want the AI to know, you must include it in the context window — the &quot;working memory&quot; of a single session.</p>
+<h3>What counts as context?</h3>
+<ul>
+<li>The conversation history so far</li>
+<li>Files you&#x27;ve shared or opened</li>
+<li>Rules and instructions loaded at startup</li>
+<li>Results of previous tool calls (e.g., search results, file contents)</li>
+</ul>
+<h3>Why it matters</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Scenario</th><th>Without context</th><th>With context</th></tr></thead><tbody><tr><td>&quot;Summarize the competitor&quot;</td><td>Generic, outdated summary</td><td>Brief grounded in the filings and notes you shared</td></tr><tr><td>&quot;Write the stakeholder update&quot;</td><td>Generic status email</td><td>Update tailored to your audience, project, and open risks</td></tr></tbody></table></div>
+<p><strong>Context window</strong> = the maximum amount of text the AI can hold in memory at once. Measured in <strong>tokens</strong> (~1 token ≈ 0.75 words). GPT-4 handles ~128,000 tokens; Claude handles ~200,000.</p>
+<p>When context is full, older information gets dropped — so keep prompts focused.</p>
+<h3>The context window (what fills up)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    subgraph window [&quot;Context window — finite working memory&quot;]
+        direction TB
+        H[Conversation history]
+        F[Files you @-mentioned]
+        RI[Rules &amp; instructions]
+        TC[Tool call results]
+    end
+
+    window --&gt; LLM[LLM uses all of this\nto generate the next reply]
+
+    Full[&quot;⚠ When full → oldest entries\ndrop off silently&quot;] -.-&gt; window
+
+    style window fill:#f8f9fa,stroke:#666
+    style LLM fill:#e8f4fc,stroke:#333</pre></div>
+<p>Everything in the box competes for the same space. A 50-page doc plus a long chat can push out your original instructions.</p>
+</section>
+<section class="learn-section section-anchor" id="h-how-agents-use-skills-rules-and-instructions">
+<h2 class="learn-section-title">H. How Agents Use Skills, Rules, and Instructions</h2>
+<p>Here is how all the pieces fit together when an agent runs a task:</p>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    Task[You give a task] --&gt; LoadI[Load Instructions]
+    Task --&gt; LoadR[Load Rules]
+    Task --&gt; MatchS{Matching skill?}
+    MatchS --&gt;|Yes| LoadS[Load Skill playbook]
+    MatchS --&gt;|No| Plan
+    LoadI --&gt; Plan[Make a plan]
+    LoadR --&gt; Plan
+    LoadS --&gt; Plan
+    Plan --&gt; Exec[Execute step by step\nvia tools]
+    Exec --&gt; Check{Irreversible\naction?}
+    Check --&gt;|Yes| Rules[Re-check rules]
+    Rules --&gt; Exec
+    Check --&gt;|No| Exec
+    Exec --&gt; Done[Return result to you]
+
+    style Task fill:#d4edda,stroke:#333
+    style Done fill:#d4edda,stroke:#333</pre></div>
+<h3>Concrete example</h3>
+<p><strong>Task:</strong> &quot;Create Jira tickets from today&#x27;s stakeholder workshop notes.&quot; <em>(Business Analyst)</em></p>
+<ol>
+<li><strong>Instructions</strong> tell the agent to be concise and ask if anything is unclear.</li>
+<li><strong>Rules</strong> say never create duplicate tickets — so the agent searches Jira first.</li>
+<li><strong>Skill</strong> &quot;capture-tasks-from-workshop-notes&quot; tells it: read the notes → find action items → look up assignee account IDs → create tickets with context.</li>
+<li>Agent executes all steps, then confirms what it created.</li>
+</ol>
+<p><strong>The result:</strong> You didn&#x27;t have to tell the agent <em>how</em> to do any of this. The skill already knew. You just described <em>what</em> you wanted.</p>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    Notes[Workshop notes] --&gt; Skill[Skill:\ncapture-tasks]
+    Skill --&gt; Search[Search Jira\nfor duplicates]
+    Search --&gt; Create[Create tickets\nwith assignees]
+    Create --&gt; Confirm[Confirm to you]
+
+    style Skill fill:#cce5ff,stroke:#333</pre></div>
+</section>
+<section class="learn-section section-anchor" id="i-prompt-vs-agent-which-one-to-use">
+<h2 class="learn-section-title">I. Prompt vs Agent — Which One to Use?</h2>
+<p>This is the most practical decision you&#x27;ll make when using AI tools.</p>
+<h3>Use a prompt when…</h3>
+<p>The task is <strong>one shot</strong> — you describe it, the AI responds, you&#x27;re done.</p>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Situation</th><th>Example prompt</th></tr></thead><tbody><tr><td>Get an explanation</td><td>&quot;Explain how cohort retention analysis works in simple terms.&quot;</td></tr><tr><td>Draft something</td><td>&quot;Write a Microsoft Teams message summarizing tomorrow&#x27;s competitive intel sync.&quot;</td></tr><tr><td>Transform content</td><td>&quot;Summarize this 10-K filing excerpt in 5 bullet points for executives.&quot;</td></tr><tr><td>Answer a question</td><td>&quot;What is the difference between a business analyst and a data analyst?&quot;</td></tr><tr><td>Generate options</td><td>&quot;Give me 5 metrics to track on a competitor pricing dashboard.&quot;</td></tr></tbody></table></div>
+<p><strong>Signal:</strong> You could hand the output directly to a person with no extra steps.</p>
+<h3>Build an agent when…</h3>
+<p>The task requires <strong>multiple steps, decisions, or tools</strong> — and doing it manually every time is tedious.</p>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Situation</th><th>What the agent does</th><th>Persona</th></tr></thead><tbody><tr><td>Weekly competitive report</td><td>Visits 5 competitor websites → extracts updates → formats a report → saves to Drive</td><td>Competitive Intelligence Analyst</td></tr><tr><td>Triage research requests</td><td>Reads new intake forms → classifies by type → checks Jira for duplicates → creates or updates issues</td><td>Business Analyst</td></tr><tr><td>Post-workshop actions</td><td>Reads transcript → extracts action items → looks up assignees → creates Jira tasks</td><td>Business Analyst</td></tr><tr><td>Weekly metrics digest</td><td>Pulls warehouse exports → validates row counts → builds variance tables → saves summary to Drive</td><td>Data Analyst</td></tr><tr><td>Competitive filing review</td><td>Reads new SEC filings → flags pricing or partnership changes → drafts an intel brief</td><td>Competitive Intelligence Analyst</td></tr></tbody></table></div>
+<p><strong>Signal:</strong> You find yourself doing the same sequence of steps repeatedly, or the task involves reading/writing from multiple tools.</p>
+<h3>The decision flowchart</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    Start[New task] --&gt; Q1{One step only?}
+    Q1 --&gt;|Yes| Prompt[Use a prompt]
+    Q1 --&gt;|No| Q2{Uses more than one\ntool or data source?}
+    Q2 --&gt;|No| Prompt
+    Q2 --&gt;|Yes| Q3{Will you repeat\nthis regularly?}
+    Q3 --&gt;|No| Prompt
+    Q3 --&gt;|Yes| Agent[Build an agent]
+
+    style Prompt fill:#fff3cd,stroke:#333
+    style Agent fill:#d4edda,stroke:#333</pre></div>
+<h3>Prompt vs agent (pipeline comparison)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    subgraph prompt_flow [Prompt — one shot]
+        P1[You write prompt] --&gt; P2[LLM responds once]
+        P2 --&gt; P3[Done]
+    end
+
+    subgraph agent_flow [Agent — multi-step loop]
+        A1[You give goal] --&gt; A2[Plan]
+        A2 --&gt; A3[Tool calls]
+        A3 --&gt; A4[More steps…]
+        A4 --&gt; A5[Final output]
+    end</pre></div>
+<h3>Side-by-side comparison</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th></th><th>Prompt</th><th>Agent</th></tr></thead><tbody><tr><td><strong>Setup time</strong></td><td>Seconds</td><td>Hours to days</td></tr><tr><td><strong>Best for</strong></td><td>One-off, single-step tasks</td><td>Repeated, multi-step workflows</td></tr><tr><td><strong>Requires tools?</strong></td><td>No</td><td>Yes (search, APIs, file system)</td></tr><tr><td><strong>You stay in the loop?</strong></td><td>Always</td><td>Optional — can run autonomously</td></tr><tr><td><strong>Example</strong></td><td>&quot;Summarize this competitor filing&quot;</td><td>&quot;Every Monday, pull last week&#x27;s market data and draft an intel brief&quot;</td></tr></tbody></table></div>
+<h3>Practical rule of thumb</h3>
+<blockquote class="callout callout-tip"><p>
+<strong>If you can describe the entire task in one sentence and the AI can respond in one shot → prompt.</strong> 
+<strong>If you&#x27;d need to write a checklist of steps for a new hire → agent.</strong> 
+</p></blockquote>
+</section>
+<section class="learn-section section-anchor" id="putting-it-all-together">
+<h2 class="learn-section-title">Putting It All Together</h2>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Concept</th><th>One-line summary</th></tr></thead><tbody><tr><td>LLM</td><td>AI trained on text to understand and generate language</td></tr><tr><td>GitHub Copilot</td><td>LLM inside your code editor that writes code for you</td></tr><tr><td>Agent</td><td>AI that takes actions, not just answers questions</td></tr><tr><td>Prompt</td><td>The instruction you give the AI — quality matters</td></tr><tr><td>Instructions</td><td>The agent&#x27;s baseline personality</td></tr><tr><td>Rules</td><td>Hard guardrails the agent always follows</td></tr><tr><td>Skills</td><td>Step-by-step playbooks for specific tasks</td></tr><tr><td>Modes</td><td>Ask (read), Plan (think), Agent (act)</td></tr><tr><td>Context</td><td>Everything the AI knows in this session</td></tr><tr><td>Prompt vs Agent</td><td>One-shot task → prompt. Repeated multi-step workflow → agent</td></tr></tbody></table></div>
+<p><strong>Continue to Part 2:</strong> <a href="part2.html">AI_Agents_Primer_Part2.md</a> — tools, MCP, models, human-in-the-loop, building skills, failures, memory, security, evaluation, and workflows.</p>
+</section>
+  </article>
+
+  <nav class="learn-part-nav" aria-label="Part navigation">
+    <span></span>
+    <a href="../learn.html" class="learn-index-link">Course index</a>
+    <a href="part2.html">Part 2 — Practice →</a>
+  </nav>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <p>AgentAtlas &nbsp;&middot;&nbsp; Navigate the world of AI agents &nbsp;&middot;&nbsp; Built with <span class="heart">&#10084;&#65039;</span> for the world</p>
+  </div>
+  <div class="footer-right">
+    <a href="https://www.linkedin.com/in/sinha-vivek/" target="_blank" title="LinkedIn" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.855v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://github.com/viveksinha" target="_blank" title="GitHub" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+    <a href="https://x.com/geekwhotravels" target="_blank" title="X / Twitter" aria-label="X / Twitter">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+    </a>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+  function mermaidTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    if (t === 'dark') return 'dark';
+    if (t === 'light') return 'neutral';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'neutral';
+  }
+
+  async function renderMermaid() {
+    mermaid.initialize({ startOnLoad: false, theme: mermaidTheme(), securityLevel: 'loose' });
+    await mermaid.run({ querySelector: '.mermaid' });
+  }
+
+  renderMermaid();
+  document.getElementById('themeToggle')?.addEventListener('click', () => setTimeout(renderMermaid, 350));
+</script>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Part 3 — Scale — Learn — AgentAtlas</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/learn.css" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../index.html">
+      <span class="logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      AgentAtlas
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../learn.html">Learn</a></li>
+      <li><a href="../resources.html">Resources</a></li>
+      <li><a href="../tools.html">Tools</a></li>
+      <li><a href="../examples.html">Examples</a></li>
+      <li><a href="../deep-tech.html">Deep Tech</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="learn-hero">
+  <div class="breadcrumb" style="margin-bottom:14px; font-size:0.8rem;"><a href="../index.html">Home</a> › <a href="../learn.html">Learn</a> › Part 3 — Scale</div>
+  <h1>Part 3 — Scale</h1>
+  <p>Sections T–Y · Subagents, automations, RAG, cost, team rollout, production</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Beginner</span>
+    <span class="hero-tag">Cursor &amp; VS Code</span>
+    <span class="hero-tag">25 Sections</span>
+  </div>
+</div>
+
+<div class="learn-progress">Part 3 of 3 · Scale</div>
+
+<nav class="learn-quick-nav" aria-label="Section navigation">
+  <div class="learn-quick-nav-inner">
+      <a href="#t-subagents-delegating-work-to-specialized-agents">T. Subagents</a>
+      <a href="#u-hooks-automations-running-agents-without-asking">U. Hooks</a>
+      <a href="#v-rag-giving-agents-a-searchable-knowledge-base">V. RAG</a>
+      <a href="#w-cost-tokens-keeping-agent-runs-affordable">W. Cost</a>
+      <a href="#x-team-rollout-sharing-skills-rules-and-agents">X. Team rollout</a>
+      <a href="#y-the-production-agent-checklist-from-experiment-to-trusted-system">Y. Production</a>
+  </div>
+</nav>
+
+<div class="container learn-container">
+  <article class="learn-prose">
+<p class="learn-intro"><em>Continues from [AI_Agents_Primer_Part2.md](./AI_Agents_Primer_Part2.md). Part 2 covered tools, MCP, models, human-in-the-loop, building skills, failures, memory, security, evaluation, and workflows. Part 3 covers scaling up — subagents, automations, knowledge bases, cost, and rolling agents out to a team.</em></p>
+<section class="learn-section section-anchor" id="t-subagents-delegating-work-to-specialized-agents">
+<h2 class="learn-section-title">T. Subagents — Delegating Work to Specialized Agents</h2>
+<p>A <strong>subagent</strong> is a smaller agent that a main agent spins up to handle one piece of a larger task. The main agent stays in charge; the subagent does focused work and reports back.</p>
+<p>Think of it as a manager delegating to specialists instead of doing everything alone.</p>
+<h3>One agent vs subagents</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>One agent does everything</th><th>Main agent + subagents</th></tr></thead><tbody><tr><td>Reads 50 sources, writes report, validates data</td><td>Main agent assigns: &quot;you search filings,&quot; &quot;you pull metrics,&quot; &quot;you write the summary&quot;</td></tr><tr><td>Context fills up fast</td><td>Each subagent gets only what it needs</td></tr><tr><td>Slower on complex tasks</td><td>Parallel work — multiple subagents can run at once</td></tr></tbody></table></div>
+<p><strong>Simple analogy:</strong> One person cooking a five-course dinner vs a head chef coordinating saucier, pastry chef, and grill cook.</p>
+<h3>When subagents help</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Situation</th><th>Why subagents work</th></tr></thead><tbody><tr><td>Large market landscape scan</td><td>One subagent searches news, another SEC filings</td></tr><tr><td>Research + writing</td><td>One subagent gathers facts, another drafts the brief</td></tr><tr><td>Parallel checks</td><td>One subagent validates data quality, another reviews source coverage</td></tr><tr><td>Unfamiliar domain</td><td>A specialized subagent gets a tighter prompt and focused tools</td></tr></tbody></table></div>
+<h3>How it works in practice</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TD
+    You[&quot;You: Why did Competitor X gain share in Q3?&quot;] --&gt; Main[Main agent\nmakes a plan]
+    Main --&gt; A[Subagent A\nsearch filings &amp; news]
+    Main --&gt; B[Subagent B\npull market metrics]
+    A --&gt; Synth[Main agent\nsynthesizes findings]
+    B --&gt; Synth
+    Synth --&gt; Propose[Proposes fix]
+    Propose --&gt; Approve{You approve?}
+    Approve --&gt;|Yes| Implement[Main or coding\nsubagent implements]
+
+    style Main fill:#e8f4fc,stroke:#333
+    style A fill:#cce5ff,stroke:#333
+    style B fill:#cce5ff,stroke:#333</pre></div>
+<p><strong>Example in Cursor:</strong> You ask for a broad competitive landscape audit. The main agent launches explore-type subagents to search filings, news, and internal dossiers in parallel, then combines their findings into one report — instead of researching each source sequentially in one thread.</p>
+<h3>Subagents vs skills vs workflows</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th></th><th>Skill</th><th>Workflow</th><th>Subagent</th></tr></thead><tbody><tr><td><strong>What it is</strong></td><td>Written playbook</td><td>Sequence of steps</td><td>Separate AI worker</td></tr><tr><td><strong>Best for</strong></td><td>Repeatable procedure you defined</td><td>Multi-step job you run on schedule</td><td>Exploration, parallel work, heavy reasoning</td></tr><tr><td><strong>Runs</strong></td><td>Inside one agent</td><td>One agent, many steps</td><td>Multiple agents, coordinated</td></tr><tr><td><strong>Example</strong></td><td>&quot;How to write a competitive pulse brief&quot;</td><td>&quot;Weekly digest: Microsoft Teams → summary → Drive&quot;</td><td>&quot;Search all competitor filings for pricing changes&quot;</td></tr></tbody></table></div>
+<p><strong>Rule of thumb:</strong> Use a skill when you know the steps. Use a workflow when the steps are long but linear. Use subagents when the task is wide, exploratory, or benefits from parallel specialists.</p>
+</section>
+<section class="learn-section section-anchor" id="u-hooks-automations-running-agents-without-asking">
+<h2 class="learn-section-title">U. Hooks &amp; Automations — Running Agents Without Asking</h2>
+<p>So far, you&#x27;ve <em>started</em> agents by typing a prompt. <strong>Automations</strong> run agents on a <strong>trigger</strong> — an event or schedule — without you being in the chat.</p>
+<p>A <strong>hook</strong> is a small script that fires when something happens (you save a file, open a PR, push code) and tells an agent to do a predefined job.</p>
+<h3>Trigger types</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Trigger</th><th>Fires when…</th><th>Example use</th></tr></thead><tbody><tr><td><strong>Manual</strong></td><td>You type a prompt</td><td>&quot;Summarize this doc&quot;</td></tr><tr><td><strong>File save</strong></td><td>You save a specific file</td><td>Auto-format markdown, update a table of contents</td></tr><tr><td><strong>Git event</strong></td><td>PR opened, commit pushed</td><td>Run a review checklist, update changelog</td></tr><tr><td><strong>Schedule</strong></td><td>Cron / timer (daily, weekly)</td><td>Monday 9am competitive pulse report</td></tr><tr><td><strong>Webhook</strong></td><td>External system pings you</td><td>New research request → triage agent</td></tr></tbody></table></div>
+<p><strong>Simple analogy:</strong> A prompt is calling a contractor when you need them. An automation is a standing order — &quot;every Monday, do X&quot; or &quot;whenever this door opens, do Y.&quot;</p>
+<h3>Trigger types (overview)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    subgraph event [Event-driven — Hooks]
+        FS[File save]
+        Git[Git event\nPR opened, push]
+        WH[Webhook\nexternal ping]
+    end
+
+    subgraph time [Time-driven — Schedule]
+        Cron[Cron / timer\ndaily, weekly]
+    end
+
+    Manual[Manual\nyou type a prompt] --&gt; Agent[Agent runs task]
+    event --&gt; Agent
+    time --&gt; Agent
+
+    style Manual fill:#fff3cd,stroke:#333
+    style Agent fill:#e8f4fc,stroke:#333</pre></div>
+<h3>Example: PR review hook</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th></th><th>Hook</th><th>Scheduled automation</th></tr></thead><tbody><tr><td><strong>Runs</strong></td><td>On an event</td><td>On a clock</td></tr><tr><td><strong>Latency</strong></td><td>Immediate (seconds after event)</td><td>Fixed time (e.g. every Monday)</td></tr><tr><td><strong>Good for</strong></td><td>Guardrails, formatting, PR checks</td><td>Reports, digests, monitoring</td></tr><tr><td><strong>Example</strong></td><td>&quot;After I save <code>README.md</code>, fix broken links&quot;</td><td>&quot;Every Friday, pull closed research requests and draft a status summary&quot;</td></tr></tbody></table></div>
+<h3>Example: PR review hook</h3>
+<div class="mermaid-wrap"><pre class="mermaid">sequenceDiagram
+    participant Dev as Developer
+    participant GH as GitHub
+    participant Hook
+    participant Agent
+    participant Reviewer as Human reviewer
+
+    Dev-&gt;&gt;GH: Opens pull request
+    GH-&gt;&gt;Hook: PR opened event
+    Hook-&gt;&gt;Agent: PR diff + project rules
+    Agent-&gt;&gt;Agent: Check tests, breaking changes, duplicates
+    Agent-&gt;&gt;GH: Post summary comment
+    Reviewer-&gt;&gt;GH: Read comment, approve merge</pre></div>
+<p>The agent doesn&#x27;t merge on its own — it <em>prepares</em> the review. Human-in-the-loop still applies (Part 2, Section M).</p>
+<h3>Building a safe automation</h3>
+<p>Before turning anything on unattended, check:</p>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Question</th><th>Safe if…</th></tr></thead><tbody><tr><td>Can this break production?</td><td>No — read-only or draft-only actions</td></tr><tr><td>Can it spam people?</td><td>No — posts only with approval or to a private channel</td></tr><tr><td>Can it leak secrets?</td><td>No — rules block <code>.env</code>, credentials, PII</td></tr><tr><td>Does it need fresh context every run?</td><td>Yes — skill tells it where to pull data each time</td></tr><tr><td>Have you tested 3 real runs?</td><td>Yes — Part 2, Section R</td></tr></tbody></table></div>
+<p><strong>Practical rule:</strong> Automate <em>preparation</em> first (drafts, summaries, checks). Automate <em>execution</em> (send, publish, deploy) only after weeks of reliable drafts.</p>
+</section>
+<section class="learn-section section-anchor" id="v-rag-giving-agents-a-searchable-knowledge-base">
+<h2 class="learn-section-title">V. RAG — Giving Agents a Searchable Knowledge Base</h2>
+<p><strong>RAG = Retrieval-Augmented Generation.</strong> It is a pattern where the agent <em>searches</em> a knowledge base first, then <em>generates</em> an answer grounded in what it found.</p>
+<p>Without RAG, the agent only knows what&#x27;s in its training data and your current context. With RAG, it can pull from your company&#x27;s docs, wiki, past research requests, or document index.</p>
+<h3>How RAG works</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    Q[Your question] --&gt; Search[Search knowledge base\nwiki, dossiers, data dictionary]
+    Search --&gt; Chunks[Retrieve top\nrelevant chunks]
+    Chunks --&gt; Context[Add chunks\nto context]
+    Context --&gt; Gen[LLM generates\n grounded answer]
+    Gen --&gt; A[Company-specific\nresponse]
+
+    style Search fill:#cce5ff,stroke:#333
+    style Gen fill:#e8f4fc,stroke:#333
+    style A fill:#d4edda,stroke:#333</pre></div>
+<p>This is the classic <strong>Retrieve → Augment → Generate</strong> pipeline. Search first, then answer from what was found — not from memory alone.</p>
+<p><strong>Simple analogy:</strong> Open-book exam vs closed-book. RAG lets the agent open the book (your docs) before answering.</p>
+<h3>RAG vs putting files in context</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th></th><th>@-mention / open files</th><th>RAG</th></tr></thead><tbody><tr><td><strong>You choose</strong></td><td>Yes — you pick exact files</td><td>Agent searches — finds relevant sections automatically</td></tr><tr><td><strong>Scale</strong></td><td>Works for a few files</td><td>Works for thousands of docs</td></tr><tr><td><strong>Best for</strong></td><td>&quot;Use this spec&quot; / &quot;Fix this file&quot;</td><td>&quot;What do we know about X across the org?&quot;</td></tr><tr><td><strong>Risk</strong></td><td>Low — you control what&#x27;s included</td><td>Medium — wrong chunk retrieved → wrong answer</td></tr></tbody></table></div>
+<h3>What makes a good knowledge base for RAG</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Good source</th><th>Poor source</th></tr></thead><tbody><tr><td>Up-to-date wiki pages</td><td>Duplicate docs with conflicting info</td></tr><tr><td>Tagged support macros</td><td>Raw Microsoft Teams threads with no structure</td></tr><tr><td>Single source-of-truth policies</td><td>PDF scans with no text layer</td></tr><tr><td>README and architecture docs</td><td>Outdated docs nobody maintains</td></tr></tbody></table></div>
+<h3>RAG in everyday agent work</h3>
+<p>You may already use RAG without the label:</p>
+<ul>
+<li><strong>Document indexing</strong> in Cursor — agent searches your project files semantically</li>
+<li><strong>Confluence / Drive search via MCP</strong> — agent queries connected knowledge</li>
+<li><strong>&quot;Search company knowledge&quot; skills</strong> — playbook that says: search internal docs first, then answer</li>
+</ul>
+<p><strong>Example:</strong> &quot;How do we source pricing data for a new competitor?&quot; The agent searches your internal research playbook and data dictionary, then summarizes the steps — instead of guessing from generic internet knowledge.</p>
+<h3>When RAG fails</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Problem</th><th>Fix</th></tr></thead><tbody><tr><td>Answer cites outdated policy</td><td>Maintain docs; add &quot;last reviewed&quot; dates</td></tr><tr><td>Agent can&#x27;t find the doc</td><td>Improve titles, headings, and keywords in source docs</td></tr><tr><td>Answer mixes two conflicting docs</td><td>Consolidate sources; mark one as canonical</td></tr><tr><td>Retrieves irrelevant chunks</td><td>Narrow the search (specific folder, competitor, or tag)</td></tr></tbody></table></div>
+<p><strong>Rule of thumb:</strong> RAG is only as good as the documents you feed it. Garbage in, garbage out — same as any search engine.</p>
+</section>
+<section class="learn-section section-anchor" id="w-cost-tokens-keeping-agent-runs-affordable">
+<h2 class="learn-section-title">W. Cost &amp; Tokens — Keeping Agent Runs Affordable</h2>
+<p>Every agent run consumes <strong>tokens</strong> — the units LLMs use to measure text in and text out (see Part 1, Section G). More tokens = more cost and often more time.</p>
+<p>Understanding cost helps you build agents that are effective <em>and</em> sustainable — especially for automations that run daily or across a team.</p>
+<h3>What uses tokens</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Consumes tokens</th><th>Usually free / local</th></tr></thead><tbody><tr><td>Your prompt and the agent&#x27;s replies</td><td>Reading a file from disk (before content goes to the model)</td></tr><tr><td>File contents loaded into context</td><td>MCP auth handshake</td></tr><tr><td>Tool outputs returned to the agent</td><td>Rules and skills stored on disk (only loaded portions count)</td></tr><tr><td>Long conversation history</td><td></td></tr></tbody></table></div>
+<p><strong>Rough math:</strong> ~1 token ≈ 0.75 words. A 10-page doc ≈ 7,500–10,000 tokens. Loading 20 files into one chat can burn through a large context window in a single run.</p>
+<h3>Token flow (one agent run)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    subgraph in [Tokens IN]
+        P[Your prompt]
+        F[File contents]
+        T[Tool outputs]
+    end
+
+    subgraph model [LLM]
+        M[Processes context]
+    end
+
+    subgraph out [Tokens OUT]
+        R[Agent reply]
+    end
+
+    in --&gt; M --&gt; out
+    Cost[&quot;Cost ≈ tokens in + tokens out\n× model price × runs per month&quot;]
+
+    style Cost fill:#fff3cd,stroke:#333</pre></div>
+<h3>Cost drivers in agent workflows</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Driver</th><th>Why it costs more</th><th>How to reduce</th></tr></thead><tbody><tr><td><strong>Large context</strong></td><td>Whole repo or long docs in every run</td><td>@-mention only relevant files; use RAG search instead of dumping everything</td></tr><tr><td><strong>Reasoning models</strong></td><td>Slower, pricier, more thorough</td><td>Use for hard tasks only; use fast models for formatting and simple edits</td></tr><tr><td><strong>Many tool calls</strong></td><td>Each call&#x27;s output goes back into context</td><td>Combine steps; write skills that avoid redundant searches</td></tr><tr><td><strong>Long agent loops</strong></td><td>Agent retries, explores, backtracks</td><td>Clear prompt with done criteria; Plan mode before Agent mode</td></tr><tr><td><strong>Automations at scale</strong></td><td>50 runs/day × team of 20</td><td>Cache results, batch weekly instead of hourly, read-only summaries</td></tr></tbody></table></div>
+<h3>Model choice vs cost (practical guide)</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Task tier</th><th>Model</th><th>Cost mindset</th></tr></thead><tbody><tr><td><strong>Tier 1 — trivial</strong></td><td>Fast / lightweight</td><td>Pennies; don&#x27;t overthink</td></tr><tr><td><strong>Tier 2 — daily work</strong></td><td>Standard balanced</td><td>Default for most agent tasks</td></tr><tr><td><strong>Tier 3 — hard problems</strong></td><td>Reasoning / large context</td><td>Use deliberately; worth it when stuck</td></tr><tr><td><strong>Tier 4 — automated at scale</strong></td><td>Often Tier 1 or 2 with tight skills</td><td>Design the workflow to minimize tokens per run</td></tr></tbody></table></div>
+<p><strong>Example:</strong> A weekly report automation that loads 100 files every Monday is expensive. Better: a skill that searches Microsoft Teams and Jira for <em>last week&#x27;s date range</em> and pulls only matching items — maybe 5–10 snippets instead of 100 files.</p>
+<h3>Signs your agent is too expensive</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Signal</th><th>Likely cause</th></tr></thead><tbody><tr><td>Runs take minutes for simple tasks</td><td>Wrong model or too much context</td></tr><tr><td>Same search repeated every step</td><td>Skill doesn&#x27;t cache or summarize early</td></tr><tr><td>Automation bill spikes</td><td>Trigger fires too often or on every file save</td></tr><tr><td>Context overflow mid-task</td><td>Agent re-reads everything after each tool call</td></tr></tbody></table></div>
+<p><strong>Rule of thumb:</strong> Before automating, estimate: <em>How many tokens per run × how many runs per month?</em> If you wouldn&#x27;t run the same query manually 500 times, tighten the workflow first.</p>
+</section>
+<section class="learn-section section-anchor" id="x-team-rollout-sharing-skills-rules-and-agents">
+<h2 class="learn-section-title">X. Team Rollout — Sharing Skills, Rules, and Agents</h2>
+<p>Once one person has a working agent setup, the next step is making it useful for <strong>the whole team</strong> — without everyone reinventing prompts or breaking guardrails.</p>
+<p>Team rollout means shared <strong>standards</strong> (rules), shared <strong>playbooks</strong> (skills), and shared <strong>integrations</strong> (MCP) — so every agent behaves consistently.</p>
+<h3>What to share vs keep personal</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Share at team level</th><th>Keep personal</th></tr></thead><tbody><tr><td>Rules (security, approval, tone)</td><td>Your individual @-mentions and chat history</td></tr><tr><td>Skills for recurring workflows</td><td>Experimental one-off prompts</td></tr><tr><td>MCP connections (with admin oversight)</td><td>Private notes and drafts</td></tr><tr><td><code>AGENTS.md</code> or project README for agent context</td><td>Personal API keys</td></tr></tbody></table></div>
+<h3>Layers of shared configuration</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Layer</th><th>What it contains</th><th>Example</th></tr></thead><tbody><tr><td><strong>Org-wide rules</strong></td><td>Security, compliance, brand voice by the way Facebook marketplace Display why do you think</td><td>&quot;Never include customer names in external drafts&quot;</td></tr><tr><td><strong>Project rules</strong></td><td>Team-specific conventions</td><td>&quot;Always cite sources in competitive briefs; use ISO dates in reports&quot;</td></tr><tr><td><strong>Team skills</strong></td><td>Standard workflows</td><td><code>competitive-pulse</code>, <code>stakeholder-requirements</code>, <code>weekly-metrics-digest</code></td></tr><tr><td><strong>Personal skills</strong></td><td>Your shortcuts</td><td>&quot;My weekly metrics recap format&quot;</td></tr></tbody></table></div>
+<p><strong>Simple analogy:</strong> Rules = company policy. Project rules = team norms. Skills = department SOPs. Personal skills = your own cheat sheets.</p>
+<h3>Configuration layers (pyramid)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    Org[&quot;Org-wide rules\nsecurity, compliance, brand&quot;]
+    Project[&quot;Project rules\nrepo conventions&quot;]
+    Team[&quot;Team skills\nshared workflows&quot;]
+    Personal[&quot;Personal skills\nyour shortcuts&quot;]
+    Agent[Every agent run]
+
+    Org --&gt; Agent
+    Project --&gt; Agent
+    Team --&gt; Agent
+    Personal --&gt; Agent
+
+    style Org fill:#f8d7da,stroke:#333
+    style Project fill:#fff3cd,stroke:#333
+    style Team fill:#cce5ff,stroke:#333
+    style Personal fill:#d4edda,stroke:#333</pre></div>
+<h3>Rollout checklist</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Step</th><th>Action</th></tr></thead><tbody><tr><td>1. <strong>Pilot</strong></td><td>One person runs the workflow 3+ times successfully</td></tr><tr><td>2. <strong>Document</strong></td><td>Turn the workflow into a skill with triggers, steps, and output format</td></tr><tr><td>3. <strong>Harden</strong></td><td>Add rules for approval, secrets, and failure handling</td></tr><tr><td>4. <strong>Share</strong></td><td>Commit skills and <code>.md</code> playbooks to a shared repo or skills library</td></tr><tr><td>5. <strong>Train</strong></td><td>30-minute walkthrough: when to use it, what it won&#x27;t do, how to review output</td></tr><tr><td>6. <strong>Measure</strong></td><td>Track time saved, error rate, and override frequency for 2–4 weeks</td></tr><tr><td>7. <strong>Iterate</strong></td><td>Update the skill based on real failures — not one person&#x27;s preference</td></tr></tbody></table></div>
+<h3>Team rollout pipeline</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart LR
+    P1[Pilot\n3+ runs] --&gt; P2[Document\nas skill]
+    P2 --&gt; P3[Harden\nrules]
+    P3 --&gt; P4[Share\nversion control]
+    P4 --&gt; P5[Train\nteam]
+    P5 --&gt; P6[Measure\n2–4 weeks]
+    P6 --&gt; P7[Iterate]
+    P7 -.-&gt; P1
+
+    style P1 fill:#fff3cd,stroke:#333
+    style P4 fill:#cce5ff,stroke:#333
+    style P7 fill:#d4edda,stroke:#333</pre></div>
+<h3>Common rollout mistakes</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Mistake</th><th>Better approach</th></tr></thead><tbody><tr><td>&quot;Everyone use AI for everything&quot;</td><td>Start with 2–3 high-pain, high-repeat workflows</td></tr><tr><td>No review step</td><td>Human-in-the-loop on all external actions</td></tr><tr><td>Skills live in one person&#x27;s laptop</td><td>Version-controlled shared skills folder</td></tr><tr><td>Stale docs in RAG</td><td>Assign doc owners; review quarterly</td></tr><tr><td>Different MCP access per person</td><td>Standardize connectors; IT approves scopes</td></tr></tbody></table></div>
+<p><strong>Example:</strong> A competitive intelligence and analytics team shares a <code>weekly-intel-digest</code> skill. Everyone&#x27;s agent pulls from the same Microsoft Teams channel and data warehouse export, uses the same section headings, and follows the rule &quot;draft only — never post to the leadership channel in Microsoft Teams without explicit send.&quot; New analysts get consistent output on day one.</p>
+</section>
+<section class="learn-section section-anchor" id="y-the-production-agent-checklist-from-experiment-to-trusted-system">
+<h2 class="learn-section-title">Y. The Production Agent Checklist — From Experiment to Trusted System</h2>
+<p>This section ties Part 3 together. Use it before you call any agent &quot;production ready&quot; — whether it runs on a schedule, serves a team, or touches customer data.</p>
+<h3>Before you ship</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Area</th><th>Check</th></tr></thead><tbody><tr><td><strong>Purpose</strong></td><td>One sentence: what job does this agent do, and for whom?</td></tr><tr><td><strong>Trigger</strong></td><td>Manual, hook, or schedule — documented</td></tr><tr><td><strong>Skill</strong></td><td>Step-by-step playbook exists and is version-controlled</td></tr><tr><td><strong>Rules</strong></td><td>Approval gates, secret handling, no-spam policies in place</td></tr><tr><td><strong>Tools</strong></td><td>Only the MCP servers and permissions needed — nothing extra</td></tr><tr><td><strong>Model</strong></td><td>Right tier for the task; reasoning model only if justified</td></tr><tr><td><strong>Cost</strong></td><td>Estimated tokens per run × runs per month is acceptable</td></tr><tr><td><strong>Evaluation</strong></td><td>3/3 real test runs passed (Part 2, Section R)</td></tr><tr><td><strong>Failure mode</strong></td><td>You know what happens when search fails, API is down, or context overflows</td></tr><tr><td><strong>Owner</strong></td><td>Named person who updates the skill when the workflow changes</td></tr></tbody></table></div>
+<h3>Maturity levels</h3>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Level</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><strong>0 — Experiment</strong></td><td>You try prompts ad hoc</td><td>&quot;Let me ask Claude about this bug&quot;</td></tr><tr><td><strong>1 — Repeatable</strong></td><td>Skill + rules, manual trigger</td><td>&quot;Every Friday I run the competitive-pulse-brief skill&quot;</td></tr><tr><td><strong>2 — Assisted automation</strong></td><td>Scheduled or hooked, human approves output</td><td>&quot;Monday draft appears in Drive; I edit and send&quot;</td></tr><tr><td><strong>3 — Trusted automation</strong></td><td>Runs end-to-end with monitoring</td><td>&quot;Nightly sync creates draft Jira tickets from new research requests&quot;</td></tr><tr><td><strong>4 — Team platform</strong></td><td>Shared skills, RAG, governance</td><td>&quot;All analysts use the same intel digest skill on shared MCP&quot;</td></tr></tbody></table></div>
+<p>Most teams should live at <strong>Level 1–2</strong> for months before jumping to Level 3. Level 4 is worth it when the same workflows are duplicated across dozens of people.</p>
+<h3>Maturity ladder</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart BT
+    L0[&quot;0 — Experiment\nad hoc prompts&quot;]
+    L1[&quot;1 — Repeatable\nskill + manual trigger&quot;]
+    L2[&quot;2 — Assisted automation\nschedule + human approves&quot;]
+    L3[&quot;3 — Trusted automation\nruns with monitoring&quot;]
+    L4[&quot;4 — Team platform\nshared skills, RAG, governance&quot;]
+
+    L0 --&gt; L1 --&gt; L2 --&gt; L3 --&gt; L4
+
+    style L0 fill:#f8f9fa,stroke:#333
+    style L1 fill:#fff3cd,stroke:#333
+    style L2 fill:#cce5ff,stroke:#333
+    style L3 fill:#d4edda,stroke:#333
+    style L4 fill:#28a745,stroke:#333,color:#fff</pre></div>
+<h3>The full stack (all three parts)</h3>
+<div class="mermaid-wrap"><pre class="mermaid">flowchart TB
+    You[&quot;YOU — prompt, approve, review&quot;]
+    Config[&quot;RULES &amp; INSTRUCTIONS + SKILLS&quot;]
+    Agent[&quot;AGENT — plan, tools, subagents&quot;]
+    Infra[&quot;TOOLS &amp; MCP + RAG&quot;]
+    Auto[&quot;HOOKS &amp; AUTOMATIONS&quot;]
+    Model[&quot;MODEL — fast / balanced / reasoning&quot;]
+
+    You --&gt; Config --&gt; Agent --&gt; Infra --&gt; Auto --&gt; Model
+
+    style You fill:#d4edda,stroke:#333
+    style Agent fill:#e8f4fc,stroke:#333
+    style Model fill:#fff3cd,stroke:#333</pre></div>
+</section>
+<section class="learn-section section-anchor" id="putting-it-all-together-part-3">
+<h2 class="learn-section-title">Putting It All Together (Part 3)</h2>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Concept</th><th>One-line summary</th></tr></thead><tbody><tr><td>Subagents</td><td>Specialized agents handle subtasks; main agent coordinates</td></tr><tr><td>Hooks &amp; automations</td><td>Agents run on events or schedules, not only when you type</td></tr><tr><td>RAG</td><td>Agent searches your docs first, then answers from what it found</td></tr><tr><td>Cost &amp; tokens</td><td>Context size, model choice, and loop length drive bill and speed</td></tr><tr><td>Team rollout</td><td>Shared rules, skills, and MCP — pilot before scaling</td></tr><tr><td>Production checklist</td><td>Purpose, safety, evaluation, owner — before trusting automation</td></tr></tbody></table></div>
+</section>
+<section class="learn-section section-anchor" id="course-complete-where-to-go-from-here">
+<h2 class="learn-section-title">Course Complete — Where to Go From Here</h2>
+<p>You&#x27;ve now covered the full arc:</p>
+<div class="table-wrap"><table class="learn-table"><thead><tr><th>Part</th><th>Focus</th></tr></thead><tbody><tr><td><strong>Part 1</strong></td><td>Foundations — LLMs, agents, prompts, skills, rules, modes, context</td></tr><tr><td><strong>Part 2</strong></td><td>Practice — tools, MCP, models, failures, security, workflows</td></tr><tr><td><strong>Part 3</strong></td><td>Scale — subagents, automations, RAG, cost, team rollout</td></tr></tbody></table></div>
+<p><strong>Suggested next steps:</strong></p>
+<ol>
+<li>Pick <strong>one</strong> repetitive task you do weekly.</li>
+<li>Write a <strong>skill</strong> for it (Part 2, Section N).</li>
+<li>Run it manually <strong>three times</strong> and fix what breaks.</li>
+<li>Add <strong>rules</strong> for anything that touched Microsoft Teams, email, or git.</li>
+<li>Only then consider a <strong>schedule</strong> or <strong>hook</strong> (Part 3, Section U).</li>
+</ol>
+<p>The best agent is not the most autonomous one — it&#x27;s the one your team trusts because it does one job reliably, every time.</p>
+</section>
+  </article>
+
+  <nav class="learn-part-nav" aria-label="Part navigation">
+    <a href="part2.html">← Part 2 — Practice</a>
+    <a href="../learn.html" class="learn-index-link">Course index</a>
+    <a href="../learn.html">Course complete ✓</a>
+  </nav>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <p>AgentAtlas &nbsp;&middot;&nbsp; Navigate the world of AI agents &nbsp;&middot;&nbsp; Built with <span class="heart">&#10084;&#65039;</span> for the world</p>
+  </div>
+  <div class="footer-right">
+    <a href="https://www.linkedin.com/in/sinha-vivek/" target="_blank" title="LinkedIn" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.855v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://github.com/viveksinha" target="_blank" title="GitHub" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+    <a href="https://x.com/geekwhotravels" target="_blank" title="X / Twitter" aria-label="X / Twitter">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+    </a>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+  function mermaidTheme() {
+    const t = document.documentElement.getAttribute('data-theme');
+    if (t === 'dark') return 'dark';
+    if (t === 'light') return 'neutral';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'neutral';
+  }
+
+  async function renderMermaid() {
+    mermaid.initialize({ startOnLoad: false, theme: mermaidTheme(), securityLevel: 'loose' });
+    await mermaid.run({ querySelector: '.mermaid' });
+  }
+
+  renderMermaid();
+  document.getElementById('themeToggle')?.addEventListener('click', () => setTimeout(renderMermaid, 350));
+</script>
+</body>
+</html>
